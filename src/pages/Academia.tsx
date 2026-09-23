@@ -99,7 +99,7 @@ function GuideModule() {
             key={s.id}
             type="button"
             onClick={() => loadSession(s.id)}
-            className={`clip-btn px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition ${
+            className={`btn-knife px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition ${
               s.id === sessionId
                 ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
                 : 'glass text-[var(--muted)] hover:text-[var(--ink)]'
@@ -127,7 +127,7 @@ function GuideModule() {
             <button
               type="button"
               onClick={() => setRunning((v) => !v)}
-              className="clip-btn flex h-11 w-11 items-center justify-center bg-[var(--accent)] text-[var(--accent-ink)]"
+              className="btn-knife flex h-11 w-11 items-center justify-center bg-[var(--accent)] text-[var(--accent-ink)]"
               aria-label={running ? 'Pausar' : 'Play'}
             >
               {running ? <Pause size={18} /> : <Play size={18} />}
@@ -170,7 +170,7 @@ function GuideModule() {
             type="button"
             onClick={() => goTo(stepIdx - 1)}
             disabled={stepIdx === 0}
-            className="clip-btn glass inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase disabled:opacity-40"
+            className="btn-knife glass inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase disabled:opacity-40"
           >
             <ChevronLeft size={14} /> Anterior
           </button>
@@ -181,7 +181,7 @@ function GuideModule() {
               setRunning(false)
               setDone(false)
             }}
-            className="clip-btn glass inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase"
+            className="btn-knife glass inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase"
           >
             <RotateCcw size={14} /> Reset
           </button>
@@ -189,7 +189,7 @@ function GuideModule() {
             type="button"
             onClick={() => goTo(stepIdx + 1)}
             disabled={stepIdx >= session.steps.length - 1}
-            className="clip-btn glass inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase disabled:opacity-40"
+            className="btn-knife glass inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase disabled:opacity-40"
           >
             Siguiente <ChevronRight size={14} />
           </button>
@@ -283,7 +283,7 @@ function QuizModule() {
               const isCorrect = i === q.correct
               const show = picked !== null
               let cls = 'glass text-[var(--ink)] hover:border-[var(--accent)]'
-              if (show && isCorrect) cls = 'bg-[color-mix(in_srgb,var(--accent)_30%,transparent)] border border-[var(--accent)] text-[var(--ink)]'
+              if (show && isCorrect) cls = 'bg-[var(--ink)] border border-[var(--ink)] text-[var(--accent-ink)]'
               if (show && i === picked && !isCorrect) cls = 'bg-[color-mix(in_srgb,var(--danger)_25%,transparent)] border border-[var(--danger)]'
               return (
                 <button
@@ -291,10 +291,10 @@ function QuizModule() {
                   type="button"
                   onClick={() => pick(i)}
                   disabled={show}
-                  className={`clip-btn flex items-center justify-between gap-3 px-5 py-3.5 text-left text-sm font-semibold transition ${cls}`}
+                  className={`btn-knife flex items-center justify-between gap-3 px-5 py-3.5 text-left text-sm font-semibold transition ${cls}`}
                 >
                   <span>{opt}</span>
-                  {show && isCorrect && <Check size={16} className="text-[var(--accent)]" />}
+                  {show && isCorrect && <Check size={16} className="text-[var(--accent-ink)]" />}
                   {show && i === picked && !isCorrect && <X size={16} className="text-[var(--danger)]" />}
                 </button>
               )
@@ -461,7 +461,7 @@ function CardsModule() {
               setI(0)
               setFlipped(false)
             }}
-            className={`clip-btn px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition ${
+            className={`btn-knife px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition ${
               deck === d
                 ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
                 : 'glass text-[var(--muted)] hover:text-[var(--ink)]'
@@ -490,9 +490,9 @@ function CardsModule() {
                 flipped ? 'border-[var(--accent)]' : ''
               }`}
             >
-              <span className="clip-tag bg-[color-mix(in_srgb,var(--accent)_18%,transparent)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
-                {flipped ? 'Respuesta' : `${card.deck} · ${i + 1}/${list.length}`}
-              </span>
+                  <span className="clip-tag bg-[var(--ink)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--accent-ink)]">
+                    {flipped ? 'Respuesta' : `${card.deck} · ${i + 1}/${list.length}`}
+                  </span>
               <p className={`mt-6 font-extrabold uppercase leading-snug ${flipped ? 'text-base font-semibold normal-case text-[var(--muted)]' : 'text-2xl'}`}>
                 {flipped ? card.back : card.front}
               </p>
@@ -509,7 +509,7 @@ function CardsModule() {
           <button
             type="button"
             onClick={() => move(-1)}
-            className="clip-btn glass flex h-11 w-11 items-center justify-center hover:text-[var(--accent)]"
+            className="btn-knife glass flex h-11 w-11 items-center justify-center hover:text-[var(--accent)]"
             aria-label="Anterior"
           >
             <ChevronLeft size={18} />
@@ -517,14 +517,14 @@ function CardsModule() {
           <button
             type="button"
             onClick={() => setFlipped((v) => !v)}
-            className="clip-btn bg-[var(--accent)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--accent-ink)]"
+            className="btn-knife bg-[var(--accent)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--accent-ink)]"
           >
             Girar
           </button>
           <button
             type="button"
             onClick={() => move(1)}
-            className="clip-btn glass flex h-11 w-11 items-center justify-center hover:text-[var(--accent)]"
+            className="btn-knife glass flex h-11 w-11 items-center justify-center hover:text-[var(--accent)]"
             aria-label="Siguiente"
           >
             <ChevronRight size={18} />
@@ -565,18 +565,26 @@ export default function Academia() {
                 onClick={() => switchModule(m.id)}
                 className={`clip-card border p-4 text-left transition-all hover:-translate-y-1 ${
                   isActive
-                    ? 'border-[var(--accent)] bg-[color-mix(in_srgb,var(--accent)_16%,var(--glass))]'
-                    : 'border-[var(--line)] bg-[var(--glass)]'
+                    ? 'border-[var(--ink)] bg-[var(--ink)]'
+                    : 'border-[var(--line)] bg-[var(--glass)] hover:border-[var(--line-strong)]'
                 }`}
               >
                 <Icon
                   size={20}
-                  className={isActive ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}
+                  className={isActive ? 'text-[var(--accent-ink)]' : 'text-[var(--muted)]'}
                 />
-                <div className={`mt-3 text-sm font-extrabold uppercase ${isActive ? 'text-[var(--ink)]' : ''}`}>
+                <div
+                  className={`mt-3 text-sm font-extrabold uppercase ${
+                    isActive ? 'text-[var(--accent-ink)]' : 'text-[var(--ink)]'
+                  }`}
+                >
                   {m.label}
                 </div>
-                <div className="mt-1 text-[11px] text-[var(--muted)]">{m.desc}</div>
+                <div
+                  className={`mt-1 text-[11px] ${isActive ? 'text-[var(--beige)]' : 'text-[var(--muted)]'}`}
+                >
+                  {m.desc}
+                </div>
               </button>
             )
           })}

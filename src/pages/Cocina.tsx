@@ -31,13 +31,13 @@ export default function Cocina() {
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href="/producto/whetstone-1000-6000"
-                className="clip-btn bg-[var(--accent)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[var(--accent-ink)] transition hover:brightness-110"
+                className="btn-knife bg-[var(--accent)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[var(--accent-ink)] transition hover:brightness-110"
               >
                 Ver piedra
               </a>
               <a
                 href="/academia"
-                className="clip-btn glass px-6 py-3 text-sm font-bold uppercase tracking-wider transition hover:border-[var(--accent)]"
+                className="btn-knife glass px-6 py-3 text-sm font-bold uppercase tracking-wider transition hover:border-[var(--accent)]"
               >
                 Abrir academia
               </a>

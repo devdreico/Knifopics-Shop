@@ -10,12 +10,14 @@ export type ArtKind =
   | 'whetstone'
   | 'block'
 
+/** Matte monochrome + wood/stone product palettes (no bright gold). */
 const palettes: Record<string, { a: string; b: string; c: string }> = {
-  blade: { a: '#c8ced8', b: '#7d8796', c: '#3d4552' },
-  dark: { a: '#4a5160', b: '#2a2f3a', c: '#12151c' },
-  gold: { a: '#e0c56e', b: '#b8912f', c: '#6e5418' },
-  wood: { a: '#c4a574', b: '#8b6914', c: '#4a3720' },
-  stone: { a: '#9aa3b2', b: '#5c6575', c: '#2b303a' },
+  blade: { a: '#e8eaed', b: '#9ca3af', c: '#3f444c' },
+  dark: { a: '#3a3d44', b: '#1c1e22', c: '#0a0a0a' },
+  /* Beige tone — reserved for a couple of heritage pieces only */
+  gold: { a: '#e6ddd0', b: '#d9cfc0', c: '#8a7f6e' },
+  wood: { a: '#c4b5a0', b: '#8b7d6b', c: '#4a4034' },
+  stone: { a: '#b0b4bb', c: '#2a2a2a', b: '#6b7078' },
 }
 
 function poly(points: string, fill: string, opacity = 1) {
@@ -133,12 +135,6 @@ export default function KnifeArt({
 
   return (
     <svg viewBox="0 0 300 200" className={className} role="img" aria-hidden="true">
-      <defs>
-        <linearGradient id={`g-${kind}-${tone}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={p.a} />
-          <stop offset="100%" stopColor={p.c} />
-        </linearGradient>
-      </defs>
       <g transform="rotate(-8 150 120)">{shapes[kind]}</g>
     </svg>
   )

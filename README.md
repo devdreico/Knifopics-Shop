@@ -4,12 +4,14 @@ E-commerce premium de cuchillos y cocina + wiki y mini app del nicho cuchillo.
 
 **Stack:** Vite · React · TypeScript · Tailwind CSS v4 · framer-motion · react-router
 
-## Diseño
+## Diseño (sistema mono premium)
 
-- Tipografía **Montserrat** (bold en títulos)
-- 3 temas: **Claro / Beige / Oscuro** (persistido en localStorage)
-- Estilo **poligonal** (`clip-path`, sin border-radius) + **glassmorphism** premium
-- Microanimaciones al scroll, hover y transiciones de ruta
+- **Blanco puro + negro mate** — sin modo oscuro, un solo tema
+- Tipografía **Montserrat** (800 display / 400–600 UI), tracking negativo en títulos
+- **Beige escaso y puntual**: eyebrows de sección, subrayado del hero, niveles de wiki, tips, selection, tono de 2 productos
+- **Glass pro**: blur 28–40px, film blanco, inset highlight, sombras bajas tipo tech
+- **Botones cuchillo** (`clip-path` hoja/punta + micro-slide en hover)
+- Polígono sin `border-radius`, grid técnico sutil, `tabular-nums` en precios
 - Logo real en navbar, footer y hero (`public/knifopics-logo.png`)
 
 ## Secciones

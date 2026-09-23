@@ -69,7 +69,7 @@ export default function Product() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="flex flex-col"
         >
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--steel)]">
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">
             {product.category === 'knifes' ? 'Knifes' : 'Cocina'}
           </p>
           <h1 className="mt-2 text-3xl font-extrabold uppercase leading-tight sm:text-4xl">
@@ -78,7 +78,9 @@ export default function Product() {
           <p className="mt-4 leading-relaxed text-[var(--muted)]">{product.description}</p>
 
           <div className="mt-6 flex items-baseline gap-3">
-            <span className="text-4xl font-extrabold">${product.price.toLocaleString('es-AR')}</span>
+            <span className="font-mono-nums text-4xl font-extrabold">
+              ${product.price.toLocaleString('es-AR')}
+            </span>
             <span className="text-xs uppercase tracking-widest text-[var(--muted)]">ARS</span>
           </div>
 
@@ -86,7 +88,7 @@ export default function Product() {
             <button
               type="button"
               onClick={() => add(product)}
-              className="clip-btn glass inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold uppercase tracking-wider transition-all hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="btn-knife glass inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold uppercase tracking-wider transition-all hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
               <ShoppingCart size={16} /> Añadir al carrito
             </button>
@@ -94,7 +96,7 @@ export default function Product() {
               href={product.mpLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="clip-btn inline-flex items-center gap-2 bg-[var(--accent)] px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-[var(--accent-ink)] transition-all hover:brightness-110"
+              className="btn-knife inline-flex items-center gap-2 bg-[var(--accent)] px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-[var(--accent-ink)] transition-all hover:brightness-110"
             >
               <Zap size={16} /> Pagar con MercadoPago
             </a>
@@ -106,7 +108,7 @@ export default function Product() {
           </p>
 
           <div className="glass clip-card mt-8 p-5">
-            <h2 className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
+            <h2 className="border-b border-[var(--line)] pb-3 text-xs font-extrabold uppercase tracking-[0.2em]">
               Especificaciones
             </h2>
             <dl className="mt-4 grid gap-3 sm:grid-cols-2">

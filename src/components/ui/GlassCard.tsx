@@ -7,8 +7,8 @@ type Props = HTMLMotionProps<'div'> & {
 export default function GlassCard({ children, className = '', ...rest }: Props) {
   return (
     <motion.div
-      whileHover={{ y: -6, transition: { duration: 0.25 } }}
-      className={`glass premium-shadow clip-card edge-highlight ${className}`}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+      className={`glass premium-shadow clip-card edge-highlight premium-shadow-hover ${className}`}
       {...rest}
     >
       {children}

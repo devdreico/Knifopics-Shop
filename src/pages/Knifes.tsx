@@ -81,7 +81,7 @@ export default function Knifes() {
         </div>
       </Reveal>
 
-      <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
+      <p className="mt-4 font-mono-nums text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
         {list.length} resultados
       </p>
 

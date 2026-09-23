@@ -10,14 +10,18 @@ type Props = {
 export default function SectionTitle({ eyebrow, title, subtitle, align = 'left' }: Props) {
   const alignCls = align === 'center' ? 'text-center items-center mx-auto' : 'text-left'
   return (
-    <Reveal className={`max-w-3xl flex flex-col gap-3 ${alignCls}`}>
+    <Reveal className={`flex max-w-3xl flex-col gap-3 ${alignCls}`}>
       {eyebrow && (
-        <span className="clip-tag inline-flex w-fit bg-[color-mix(in_srgb,var(--accent)_18%,transparent)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--accent)]">
+        <span className="clip-tag inline-flex w-fit bg-[var(--beige-soft)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.24em] text-[var(--ink)] ring-1 ring-[var(--beige)]">
           {eyebrow}
         </span>
       )}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl leading-[1.05] uppercase">{title}</h2>
-      {subtitle && <p className="text-[var(--muted)] text-base sm:text-lg leading-relaxed">{subtitle}</p>}
+      <h2 className="text-3xl leading-[1.04] font-extrabold uppercase sm:text-4xl md:text-5xl">
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="text-base leading-relaxed text-[var(--muted)] sm:text-lg">{subtitle}</p>
+      )}
     </Reveal>
   )
 }

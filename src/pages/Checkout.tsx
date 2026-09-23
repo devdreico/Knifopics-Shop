@@ -107,7 +107,7 @@ export default function Checkout() {
               <button
                 type="button"
                 onClick={() => setMode('cod')}
-                className={`clip-btn inline-flex items-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition ${
+                className={`btn-knife inline-flex items-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition ${
                   mode === 'cod'
                     ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
                     : 'glass text-[var(--muted)] hover:text-[var(--ink)]'
@@ -118,7 +118,7 @@ export default function Checkout() {
               <button
                 type="button"
                 onClick={() => setMode('mp')}
-                className={`clip-btn inline-flex items-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition ${
+                className={`btn-knife inline-flex items-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition ${
                   mode === 'mp'
                     ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
                     : 'glass text-[var(--muted)] hover:text-[var(--ink)]'
@@ -214,7 +214,7 @@ export default function Checkout() {
                           href={l.product.mpLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="clip-btn shrink-0 bg-[var(--accent)] px-4 py-2 text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent-ink)] transition hover:brightness-110"
+                          className="btn-knife shrink-0 bg-[var(--accent)] px-4 py-2 text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent-ink)] transition hover:brightness-110"
                         >
                           Pagar
                         </a>
@@ -233,7 +233,7 @@ export default function Checkout() {
 
         <Reveal delay={0.12}>
           <aside className="glass clip-hero premium-shadow sticky top-24 p-6">
-            <h2 className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
+            <h2 className="border-b border-[var(--line)] pb-3 text-xs font-extrabold uppercase tracking-[0.2em]">
               Tu pedido
             </h2>
             <ul className="mt-5 space-y-3 text-sm">
@@ -248,7 +248,7 @@ export default function Checkout() {
                 </li>
               ))}
             </ul>
-            <div className="mt-5 border-t border-[var(--line)] pt-4 flex justify-between text-lg font-extrabold">
+            <div className="mt-5 border-t border-[var(--line)] pt-4 flex justify-between text-lg font-extrabold font-mono-nums">
               <span>Total</span>
               <span>${total.toLocaleString('es-AR')}</span>
             </div>

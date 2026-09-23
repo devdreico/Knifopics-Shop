@@ -48,7 +48,7 @@ export default function Cart() {
                 </Link>
 
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--steel)]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {line.product.category === 'knifes' ? 'Knifes' : 'Cocina'}
                   </p>
                   <h3 className="truncate text-base font-extrabold uppercase">
@@ -56,7 +56,7 @@ export default function Cart() {
                       {line.product.name}
                     </Link>
                   </h3>
-                  <p className="mt-1 text-sm font-bold text-[var(--accent)]">
+                  <p className="font-mono-nums mt-1 text-sm font-bold">
                     ${(line.product.price * line.qty).toLocaleString('es-AR')}
                   </p>
                 </div>
@@ -66,7 +66,7 @@ export default function Cart() {
                     type="button"
                     aria-label="Restar"
                     onClick={() => setQty(line.product.slug, line.qty - 1)}
-                    className="clip-btn glass flex h-9 w-9 items-center justify-center hover:text-[var(--accent)]"
+                    className="btn-knife glass flex h-9 w-9 items-center justify-center hover:text-[var(--accent)]"
                   >
                     <Minus size={14} />
                   </button>
@@ -75,7 +75,7 @@ export default function Cart() {
                     type="button"
                     aria-label="Sumar"
                     onClick={() => setQty(line.product.slug, line.qty + 1)}
-                    className="clip-btn glass flex h-9 w-9 items-center justify-center hover:text-[var(--accent)]"
+                    className="btn-knife glass flex h-9 w-9 items-center justify-center hover:text-[var(--accent)]"
                   >
                     <Plus size={14} />
                   </button>
@@ -83,7 +83,7 @@ export default function Cart() {
                     type="button"
                     aria-label="Quitar"
                     onClick={() => remove(line.product.slug)}
-                    className="clip-btn glass ml-2 flex h-9 w-9 items-center justify-center text-[var(--danger)] hover:border-[var(--danger)]"
+                    className="btn-knife glass ml-2 flex h-9 w-9 items-center justify-center text-[var(--danger)] hover:border-[var(--danger)]"
                   >
                     <Trash2 size={14} />
                   </button>
@@ -103,7 +103,7 @@ export default function Cart() {
 
         <Reveal delay={0.15}>
           <aside className="glass clip-hero premium-shadow sticky top-24 p-6">
-            <h2 className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
+            <h2 className="border-b border-[var(--line)] pb-3 text-xs font-extrabold uppercase tracking-[0.2em]">
               Resumen
             </h2>
             <div className="mt-5 space-y-3 text-sm">
@@ -115,7 +115,7 @@ export default function Cart() {
                 <span>Envío</span>
                 <span>A coordinar</span>
               </div>
-              <div className="border-t border-[var(--line)] pt-3 flex justify-between text-lg font-extrabold">
+              <div className="border-t border-[var(--line)] pt-3 flex justify-between text-lg font-extrabold font-mono-nums">
                 <span>Total</span>
                 <span>${total.toLocaleString('es-AR')}</span>
               </div>

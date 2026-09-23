@@ -19,7 +19,7 @@ function GuideCard({ guide }: { guide: (typeof sharpeningGuides)[number] }) {
       >
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="clip-tag bg-[var(--surface-2)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--steel)]">
+            <span className="clip-tag bg-[var(--beige-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ink)] ring-1 ring-[var(--beige)]">
               {guide.level}
             </span>
             <span className="inline-flex items-center gap-1 text-[11px] text-[var(--muted)]">
@@ -53,7 +53,7 @@ function GuideCard({ guide }: { guide: (typeof sharpeningGuides)[number] }) {
                     <h4 className="text-sm font-extrabold uppercase tracking-wide">{step.title}</h4>
                     <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">{step.body}</p>
                     {step.tip && (
-                      <p className="mt-2 flex items-start gap-2 text-xs text-[var(--accent)]">
+                      <p className="mt-2 flex items-start gap-2 border-l-2 border-[var(--beige)] pl-2 text-xs text-[var(--ink)]">
                         <Lightbulb size={13} className="mt-0.5 shrink-0" />
                         {step.tip}
                       </p>
@@ -144,7 +144,7 @@ export default function WikiSection() {
                 transition={{ delay: (i % 4) * 0.06, duration: 0.45 }}
                 className="glass clip-card p-6"
               >
-                <span className="clip-tag inline-block bg-[color-mix(in_srgb,var(--accent)_18%,transparent)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--accent)]">
+                <span className="clip-tag inline-block bg-[var(--ink)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--accent-ink)]">
                   {f.tag}
                 </span>
                 <h3 className="mt-3 text-lg font-extrabold uppercase leading-snug">{f.title}</h3>
@@ -169,7 +169,7 @@ export default function WikiSection() {
               <Reveal key={n.slug} delay={i * 0.07}>
                 <article className="glass clip-card premium-shadow p-6 sm:p-8">
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className="clip-tag bg-[color-mix(in_srgb,var(--accent)_18%,transparent)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--accent)]">
+                    <span className="clip-tag bg-[var(--ink)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--accent-ink)]">
                       {n.tag}
                     </span>
                     <time className="text-xs text-[var(--muted)]">
@@ -181,7 +181,7 @@ export default function WikiSection() {
                     </time>
                   </div>
                   <h3 className="mt-4 text-2xl font-extrabold uppercase leading-tight">{n.title}</h3>
-                  <p className="mt-2 text-sm font-semibold text-[var(--steel)]">{n.excerpt}</p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--muted)]">{n.excerpt}</p>
                   <div className="mt-4 flex flex-col gap-3">
                     {n.body.map((p) => (
                       <p key={p.slice(0, 24)} className="text-sm leading-relaxed text-[var(--muted)]">
