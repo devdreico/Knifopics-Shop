@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-steel: var(--steel);
+  --color-danger: var(--danger);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --shadow-premium: var(--shadow-p);
+  --clip-card: var(--clip-c);
+  --clip-btn: var(--clip-b);
+  --clip-tag: var(--clip-t);
+  --clip-hero: var(--clip-h);
+}
+
+:root,
+[data-theme="light"] {
+  --bg: #eef0f3;
+  --bg-2: #e4e7ec;
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --ink: #101216;
+  --muted: #5b6170;
+  --line: rgba(16, 18, 22, 0.12);
+  --accent: #b8912f;
+  --accent-ink: #101216;
+  --steel: #4c5d75;
+  --danger: #b42318;
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-strong: rgba(255, 255, 255, 0.78);
+  --shadow-p: 0 18px 50px -24px rgba(10, 12, 16, 0.45);
+  --clip-c: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+  --clip-b: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  --clip-t: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  --clip-h: polygon(0 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 48px 100%, 0 calc(100% - 48px));
+  color-scheme: light;
+}
+
+[data-theme="beige"] {
+  --bg: #f2ebdd;
+  --bg-2: #e9dfc9;
+  --surface: #fbf7ef;
+  --surface-2: #f5efe2;
+  --ink: #1c1810;
+  --muted: #6b6252;
+  --line: rgba(28, 24, 16, 0.14);
+  --accent: #9a7b2a;
+  --accent-ink: #1c1810;
+  --steel: #5a6b52;
+  --danger: #a33b2a;
+  --glass: rgba(251, 247, 239, 0.55);
+  --glass-strong: rgba(251, 247, 239, 0.8);
+  --shadow-p: 0 18px 50px -24px rgba(40, 30, 10, 0.4);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0b0c0f;
+  --bg-2: #12141a;
+  --surface: #16181f;
+  --surface-2: #1c1f28;
+  --ink: #f2f3f6;
+  --muted: #9aa1b1;
+  --line: rgba(242, 243, 246, 0.12);
+  --accent: #d4b45a;
+  --accent-ink: #0b0c0f;
+  --steel: #8fa3bf;
+  --danger: #f97066;
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-strong: rgba(20, 22, 28, 0.78);
+  --shadow-p: 0 22px 60px -28px rgba(0, 0, 0, 0.85);
+  color-scheme: dark;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(1100px 520px at 12% -8%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
+    radial-gradient(900px 480px at 96% 8%, color-mix(in srgb, var(--steel) 16%, transparent), transparent 55%),
+    linear-gradient(165deg, var(--bg) 0%, var(--bg-2) 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--ink);
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.clip-card { clip-path: var(--clip-c); }
+.clip-btn { clip-path: var(--clip-b); }
+.clip-tag { clip-path: var(--clip-t); }
+.clip-hero { clip-path: var(--clip-h); }
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--line);
+}
+
+.glass-strong {
+  background: var(--glass-strong);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid var(--line);
+}
+
+.premium-shadow { box-shadow: var(--shadow-p); }
+
+.grid-lines {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+}
+
+.edge-highlight {
+  position: relative;
+}
+.edge-highlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), transparent 42%);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+input, select, textarea, button {
+  font: inherit;
+}
+
+input, select, textarea {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.75rem 1rem;
+  outline: none;
+  clip-path: var(--clip-b);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
