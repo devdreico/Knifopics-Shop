@@ -42,9 +42,9 @@ export default function Knifes() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
       <SectionTitle
-        eyebrow="Sección principal"
+        eyebrow="Sección 01"
         title="KNIFES"
-        subtitle="Cuchillos premium de todos los tipos: japoneses, occidentales, damascus y sets de mesa."
+        subtitle="Solo cuchillos premium: japoneses, occidentales, damascus y sets de mesa — con sus guías paso a paso."
       />
 
       <Reveal delay={0.1}>

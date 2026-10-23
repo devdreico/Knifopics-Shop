@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react'
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Bike } from 'lucide-react'
 import SectionTitle from '../components/ui/SectionTitle'
 import PolygonButton from '../components/ui/PolygonButton'
 import Reveal from '../components/ui/Reveal'
@@ -9,6 +9,13 @@ import { useCart } from '../context/CartContext'
 export default function Cart() {
   const { lines, total, setQty, remove, count, clear } = useCart()
 
+  const knifesCount = lines
+    .filter((l) => l.product.category === 'knifes')
+    .reduce((s, l) => s + l.qty, 0)
+  const kitchenCount = lines
+    .filter((l) => l.product.category === 'kitchen')
+    .reduce((s, l) => s + l.qty, 0)
+
   if (lines.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
@@ -16,11 +23,12 @@ export default function Cart() {
           <ShoppingBag size={40} className="text-[var(--accent)]" />
           <h1 className="mt-5 text-2xl font-extrabold uppercase">Carrito vacío</h1>
           <p className="mt-2 text-sm text-[var(--muted)]">
-            Añade un cuchillo o un objeto de cocina para continuar.
+            Un solo carrito para las dos secciones: sumá un cuchillo o una sartén y aparece todo
+            junto acá.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <PolygonButton to="/knifes">Explorar Knifes</PolygonButton>
-            <PolygonButton to="/cocina" variant="ghost">Cocina</PolygonButton>
+            <PolygonButton to="/kitchen" variant="beige">Explorar Kitchen</PolygonButton>
           </div>
         </div>
       </div>
@@ -30,9 +38,9 @@ export default function Cart() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
       <SectionTitle
-        eyebrow="Tu selección"
-        title="Carrito"
-        subtitle={`${count} artículo${count !== 1 ? 's' : ''} · pago contra entrega vía Formspree o link MercadoPago por producto`}
+        eyebrow="Carrito combinado"
+        title="Tu selección"
+        subtitle={`${count} artículo${count !== 1 ? 's' : ''} · Knifes: ${knifesCount} · Kitchen: ${kitchenCount} · pago contra entrega`}
       />
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_340px]">
@@ -48,10 +56,14 @@ export default function Cart() {
                 </Link>
 
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {line.product.category === 'knifes' ? 'Knifes' : 'Cocina'}
-                  </p>
-                  <h3 className="truncate text-base font-extrabold uppercase">
+                  <span
+                    className={`clip-tag inline-block px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.18em] ${
+                      line.product.category === 'knifes' ? 'chip-knifes' : 'chip-kitchen'
+                    }`}
+                  >
+                    {line.product.category === 'knifes' ? 'Knifes' : 'Kitchen'}
+                  </span>
+                  <h3 className="mt-2 truncate text-base font-extrabold uppercase">
                     <Link to={`/producto/${line.product.slug}`} className="hover:text-[var(--accent)]">
                       {line.product.name}
                     </Link>
@@ -106,16 +118,30 @@ export default function Cart() {
             <h2 className="border-b border-[var(--line)] pb-3 text-xs font-extrabold uppercase tracking-[0.2em]">
               Resumen
             </h2>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {knifesCount > 0 && (
+                <span className="clip-tag chip-knifes px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em]">
+                  Knifes · {knifesCount}
+                </span>
+              )}
+              {kitchenCount > 0 && (
+                <span className="clip-tag chip-kitchen px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em]">
+                  Kitchen · {kitchenCount}
+                </span>
+              )}
+            </div>
+
             <div className="mt-5 space-y-3 text-sm">
               <div className="flex justify-between text-[var(--muted)]">
                 <span>Subtotal</span>
-                <span>${total.toLocaleString('es-AR')}</span>
+                <span className="font-mono-nums">${total.toLocaleString('es-AR')}</span>
               </div>
               <div className="flex justify-between text-[var(--muted)]">
                 <span>Envío</span>
                 <span>A coordinar</span>
               </div>
-              <div className="border-t border-[var(--line)] pt-3 flex justify-between text-lg font-extrabold font-mono-nums">
+              <div className="font-mono-nums flex justify-between border-t border-[var(--line)] pt-3 text-lg font-extrabold">
                 <span>Total</span>
                 <span>${total.toLocaleString('es-AR')}</span>
               </div>
@@ -125,14 +151,14 @@ export default function Cart() {
               <PolygonButton to="/checkout" className="w-full">
                 Ir al checkout <ArrowRight size={16} />
               </PolygonButton>
-              <PolygonButton to="/knifes" variant="ghost" className="w-full">
-                Seguir comprando
+              <PolygonButton to="/" variant="ghost" className="w-full">
+                Elegir sección
               </PolygonButton>
             </div>
 
-            <p className="mt-4 text-[11px] leading-relaxed text-[var(--muted)]">
-              Contra entrega: enviamos tu pedido por Formspree. ¿Solo un producto? Pagá al instante
-              con el link MercadoPago de su ficha.
+            <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-[var(--muted)]">
+              <Bike size={14} className="mt-0.5 shrink-0" />
+              Todo contra entrega: confirmás el pedido por Formspree y pagás en efectivo al recibir.
             </p>
           </aside>
         </Reveal>

@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ShoppingCart, Zap, ArrowLeft, Check } from 'lucide-react'
+import { ArrowLeft, Check, ShoppingBag, Banknote } from 'lucide-react'
 import KnifeArt from '../components/ui/KnifeArt'
 import PolygonButton from '../components/ui/PolygonButton'
 import Reveal from '../components/ui/Reveal'
@@ -11,31 +11,32 @@ import { useCart } from '../context/CartContext'
 export default function Product() {
   const { slug } = useParams()
   const product = slug ? getProduct(slug) : undefined
-  const { add } = useCart()
+  const { add, count } = useCart()
 
   if (!product) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="text-3xl font-extrabold uppercase">Producto no encontrado</h1>
         <p className="mt-3 text-[var(--muted)]">El artículo que buscas no existe o fue retirado.</p>
-        <div className="mt-8 flex justify-center gap-3">
-          <PolygonButton to="/knifes">Volver a Knifes</PolygonButton>
-          <PolygonButton to="/" variant="ghost">Inicio</PolygonButton>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <PolygonButton to="/knifes">Tienda Knifes</PolygonButton>
+          <PolygonButton to="/kitchen" variant="beige">Tienda Kitchen</PolygonButton>
         </div>
       </div>
     )
   }
 
+  const isKnifes = product.category === 'knifes'
   const related = products.filter((p) => p.slug !== product.slug && p.category === product.category).slice(0, 3)
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <Reveal>
         <Link
-          to={product.category === 'knifes' ? '/knifes' : '/cocina'}
+          to={isKnifes ? '/knifes' : '/kitchen'}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
         >
-          <ArrowLeft size={14} /> Volver
+          <ArrowLeft size={14} /> {isKnifes ? 'Volver a Knifes' : 'Volver a Kitchen'}
         </Link>
       </Reveal>
 
@@ -47,8 +48,15 @@ export default function Product() {
           className="glass premium-shadow clip-hero edge-highlight relative flex min-h-[340px] items-center justify-center overflow-hidden p-8"
         >
           <div className="absolute inset-0 grid-lines opacity-40" />
+          <span
+            className={`clip-tag absolute left-5 top-5 z-10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest ${
+              isKnifes ? 'chip-knifes' : 'chip-kitchen'
+            }`}
+          >
+            {isKnifes ? 'Knifes' : 'Kitchen'}
+          </span>
           {product.tag && (
-            <span className="clip-tag absolute left-5 top-5 z-10 bg-[var(--accent)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-[var(--accent-ink)]">
+            <span className="clip-tag absolute right-5 top-5 z-10 bg-[var(--accent)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-[var(--accent-ink)]">
               {product.tag}
             </span>
           )}
@@ -70,7 +78,7 @@ export default function Product() {
           className="flex flex-col"
         >
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">
-            {product.category === 'knifes' ? 'Knifes' : 'Cocina'}
+            {isKnifes ? 'Knifes' : 'Kitchen'}
           </p>
           <h1 className="mt-2 text-3xl font-extrabold uppercase leading-tight sm:text-4xl">
             {product.name}
@@ -88,23 +96,19 @@ export default function Product() {
             <button
               type="button"
               onClick={() => add(product)}
-              className="btn-knife glass inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold uppercase tracking-wider transition-all hover:border-[var(--accent)] hover:text-[var(--accent)]"
-            >
-              <ShoppingCart size={16} /> Añadir al carrito
-            </button>
-            <a
-              href={product.mpLink}
-              target="_blank"
-              rel="noopener noreferrer"
               className="btn-knife inline-flex items-center gap-2 bg-[var(--accent)] px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-[var(--accent-ink)] transition-all hover:brightness-110"
             >
-              <Zap size={16} /> Pagar con MercadoPago
-            </a>
+              <ShoppingBag size={16} /> Añadir al carrito
+            </button>
+            <PolygonButton to="/checkout" variant="ghost">
+              <Banknote size={16} /> Pasar por checkout
+            </PolygonButton>
           </div>
 
           <p className="mt-3 flex items-center gap-2 text-xs text-[var(--muted)]">
             <Check size={14} className="text-[var(--accent)]" />
-            Link de pago único por producto · o contrareembolso en checkout
+            Pago 100 % contra entrega · pedido enviado por Formspree
+            {count > 0 && <> · {count} en el carrito combinado</>}
           </p>
 
           <div className="glass clip-card mt-8 p-5">

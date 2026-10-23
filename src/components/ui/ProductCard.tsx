@@ -37,10 +37,14 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
 
       <div className="relative z-10 flex flex-1 flex-col gap-3 p-5">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
-            {product.category === 'knifes' ? 'Knifes' : 'Cocina'}
-          </p>
-          <h3 className="mt-1 text-lg leading-tight font-extrabold uppercase">
+          <span
+            className={`clip-tag inline-block px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.18em] ${
+              product.category === 'knifes' ? 'chip-knifes' : 'chip-kitchen'
+            }`}
+          >
+            {product.category === 'knifes' ? 'Knifes' : 'Kitchen'}
+          </span>
+          <h3 className="mt-2 text-lg leading-tight font-extrabold uppercase">
             <Link
               to={`/producto/${product.slug}`}
               className="transition-colors hover:text-[var(--muted)]"

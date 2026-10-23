@@ -1,6 +1,6 @@
-import type { ArtKind } from '../components/ui/KnifeArt'
+import type { ArtKind, Tone } from '../components/ui/KnifeArt'
 
-export type Category = 'knifes' | 'cocina'
+export type Category = 'knifes' | 'kitchen'
 
 export type Product = {
   slug: string
@@ -10,7 +10,7 @@ export type Product = {
   short: string
   description: string
   art: ArtKind
-  tone: 'blade' | 'dark' | 'gold' | 'wood' | 'stone'
+  tone: Tone
   tag?: string
   steel?: string
   length?: string
@@ -18,8 +18,6 @@ export type Product = {
   weight?: string
   origin?: string
   care?: string
-  /** Unique MercadoPago payment link for this product */
-  mpLink: string
   specs: { label: string; value: string }[]
 }
 
@@ -41,7 +39,6 @@ export const products: Product[] = [
     weight: '198 g',
     origin: 'Seki, Japón',
     care: 'Lavar a mano, secar de inmediato, guardar en soporte.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-chef-damascus',
     specs: [
       { label: 'Acero', value: 'Damascus 67 capas (VG-10)' },
       { label: 'Largo de hoja', value: '21 cm' },
@@ -68,7 +65,6 @@ export const products: Product[] = [
     weight: '165 g',
     origin: 'Seki, Japón',
     care: 'Lavar a mano, secar de inmediato.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-santoku-nero',
     specs: [
       { label: 'Acero', value: 'AUS-10 nitro coat' },
       { label: 'Largo de hoja', value: '18 cm' },
@@ -85,7 +81,7 @@ export const products: Product[] = [
     price: 129999,
     short: 'Cuchillo vegetal recto de corte perpendicular limpio.',
     description:
-      'Hoja recta y alta diseñada para el cullinario vegetal: corta hasta la tabla sin balancear. Acero multicapa con núcleo de alta dureza y mango octogonal que evita el giro en la mano húmeda.',
+      'Hoja recta y alta diseñada para el uso culinario vegetal: corta hasta la tabla sin balancear. Acero multicapa con núcleo de alta dureza y mango octogonal que evita el giro en la mano húmeda.',
     art: 'nakiri',
     tone: 'blade',
     steel: 'Shirogami #2 multicapa',
@@ -94,7 +90,6 @@ export const products: Product[] = [
     weight: '175 g',
     origin: 'Seki, Japón',
     care: 'Lavar a mano, secar, aceitar ocasionalmente el filo.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-nakiri',
     specs: [
       { label: 'Acero', value: 'Shirogami #2 multicapa' },
       { label: 'Largo de hoja', value: '17 cm' },
@@ -120,7 +115,6 @@ export const products: Product[] = [
     weight: '72 g',
     origin: 'España',
     care: 'Lavar a mano y secar.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-paring',
     specs: [
       { label: 'Acero', value: '440C' },
       { label: 'Largo de hoja', value: '9 cm' },
@@ -146,7 +140,6 @@ export const products: Product[] = [
     weight: '185 g',
     origin: 'Alemania',
     care: 'Lavar a mano; el dentado se afila con piedra específica.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-bread',
     specs: [
       { label: 'Acero', value: 'X50CrMoV15' },
       { label: 'Largo de hoja', value: '26 cm' },
@@ -173,7 +166,6 @@ export const products: Product[] = [
     weight: '420 g',
     origin: 'China',
     care: 'Secar y aceitar tras cada uso (evita óxido).',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-cleaver',
     specs: [
       { label: 'Acero', value: '1095 carbon' },
       { label: 'Largo de hoja', value: '20 cm' },
@@ -200,7 +192,6 @@ export const products: Product[] = [
     weight: '4 × 95 g',
     origin: 'Suecia',
     care: 'Lavar a mano, secar con paño suave.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-steak',
     specs: [
       { label: 'Acero', value: '14C28N' },
       { label: 'Largo de hoja', value: '12 cm' },
@@ -211,9 +202,280 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: 'sarten-hierro-26',
+    name: 'Sartén Hierro Fundido 26 cm',
+    category: 'kitchen',
+    price: 129999,
+    short: 'Hierro fundido con curado de aceite, del fuego a la mesa.',
+    description:
+      'Sartén de hierro fundido de 26 cm, precocido con aceite vegetal. Sella carnes a temperatura alta, va al horno sin límite y desarrolla una capa antiadherente natural que mejora con cada uso.',
+    art: 'pan',
+    tone: 'copper',
+    tag: 'Top cocina',
+    steel: 'Hierro fundido',
+    length: '26 cm',
+    weight: '2.1 kg',
+    origin: 'Francia',
+    care: 'Lavar con agua caliente, secar al fuego, encapar con aceite.',
+    specs: [
+      { label: 'Material', value: 'Hierro fundido curado' },
+      { label: 'Diámetro', value: '26 cm' },
+      { label: 'Peso', value: '2.1 kg' },
+      { label: 'Fuente de calor', value: 'Gas, inducción, horno, brasas' },
+      { label: 'Acabado', value: 'Curado en aceite vegetal' },
+      { label: 'Vida útil', value: 'Generaciones' },
+    ],
+  },
+  {
+    slug: 'wok-carbon-30',
+    name: 'Wok Carbon 30 cm',
+    category: 'kitchen',
+    price: 109999,
+    short: 'Acero al carbono de pared delgada para fuego vivo.',
+    description:
+      'Wok de carbono de 30 cm con pared delgada que calienta en segundos. Mango de madera ahumada y fondo redondo pensado para fogones conllame. Stir-fry, sellado y fritura profunda con un solo utensilio.',
+    art: 'wok',
+    tone: 'dark',
+    tag: 'Fuego vivo',
+    steel: 'Carbon steel',
+    length: '30 cm',
+    weight: '1.2 kg',
+    origin: 'China',
+    care: 'Encapar tras cada uso; no usar jabón.',
+    specs: [
+      { label: 'Material', value: 'Carbon steel 1.6 mm' },
+      { label: 'Diámetro', value: '30 cm' },
+      { label: 'Peso', value: '1.2 kg' },
+      { label: 'Mango', value: 'Madera ahumada' },
+      { label: 'Fondo', value: 'Redondo tradicional' },
+      { label: 'Uso', value: 'Stir-fry / fritura' },
+    ],
+  },
+  {
+    slug: 'dutch-oven-55',
+    name: 'Dutch Oven Esmaltada 5,5 L',
+    category: 'kitchen',
+    price: 189999,
+    short: 'Esmalte cobre sobre hierro: guisos lentos sin atajos.',
+    description:
+      'Dutch oven de 5,5 litros en hierro fundido con esmalte interior. Mantiene el calor parejo, pasa del fuego al horno y se sirve en la mesa. El equipo de bajo fuego más versátil de la cocina.',
+    art: 'dutch',
+    tone: 'copper',
+    tag: 'Bajo fuego',
+    steel: 'Hierro fundido esmaltado',
+    length: '5,5 L',
+    weight: '4.3 kg',
+    origin: 'Francia',
+    care: 'Lavar a mano; evitar cambios térmicos bruscos.',
+    specs: [
+      { label: 'Capacidad', value: '5,5 litros' },
+      { label: 'Material', value: 'Hierro + esmalte' },
+      { label: 'Peso', value: '4.3 kg' },
+      { label: 'Temperatura', value: 'Hasta 260 °C' },
+      { label: 'Uso', value: 'Guisos, pan, cocción lenta' },
+      { label: 'Acabado', value: 'Esmalte cobre' },
+    ],
+  },
+  {
+    slug: 'olla-inox-5l',
+    name: 'Olla Inoxidable 5 L',
+    category: 'kitchen',
+    price: 139999,
+    short: 'Tres capas de acero con fondo inducción y tapa de vidrio.',
+    description:
+      'Olla de 5 litros en acero inoxidable de triple capa con núcleo de aluminio. Distribución uniforme del calor, interior graduado y tapa de vidrio templado. Para pastas, caldos y conservas.',
+    art: 'pot',
+    tone: 'blade',
+    steel: 'Inoxidable 18/10',
+    length: '5 L',
+    weight: '1.6 kg',
+    origin: 'Alemania',
+    care: 'Aptavajilla. Pulir con vinagre si aparecen manchas.',
+    specs: [
+      { label: 'Capacidad', value: '5 litros' },
+      { label: 'Material', value: 'Acero 18/10 triple capa' },
+      { label: 'Peso', value: '1.6 kg' },
+      { label: 'Tapa', value: 'Vidrio templado' },
+      { label: 'Fondo', value: 'Inducción compatible' },
+      { label: 'Interior', value: 'Graduación grabada' },
+    ],
+  },
+  {
+    slug: 'batidor-balloon',
+    name: 'Batidor Balloon Profesional',
+    category: 'kitchen',
+    price: 27999,
+    short: 'Aros de acero tensados para airear sin fatiga.',
+    description:
+      'Batidor globo de 30 cm con seis aros de acero inoxidable soldados a mano. Incorpora aire en merengues y salsas con menos esfuerzo. Mango ergonómico que no gira en mano húmeda.',
+    art: 'whisk',
+    tone: 'blade',
+    steel: 'Inoxidable pulido',
+    length: '30 cm',
+    weight: '98 g',
+    origin: 'Italia',
+    care: 'Aptavajilla; secar colgado.',
+    specs: [
+      { label: 'Tipo', value: 'Balloon / globo' },
+      { label: 'Largo', value: '30 cm' },
+      { label: 'Peso', value: '98 g' },
+      { label: 'Aros', value: '6 de acero pulido' },
+      { label: 'Mango', value: 'Ergonómico antideslizante' },
+      { label: 'Uso', value: 'Merengue, salsas, masas' },
+    ],
+  },
+  {
+    slug: 'set-utensilios-roble',
+    name: 'Set Utensilios Roble ×5',
+    category: 'kitchen',
+    price: 46999,
+    short: 'Cuchara, pala, espátula, horqueta y rascador en roble.',
+    description:
+      'Cinco utensilios de roble europeo aceitados a mano: no rayan sartenes de cerámica ni de hierro curado. Tallas ergonómicas y grano cerrado que no retiene olores.',
+    art: 'utensils',
+    tone: 'wood',
+    tag: 'Set',
+    steel: 'Roble macizo',
+    length: '5 piezas',
+    weight: '460 g',
+    origin: 'España',
+    care: 'Lavar a mano, reaceitar cada mes.',
+    specs: [
+      { label: 'Piezas', value: 'Cuchara, pala, espátula, horqueta, rascador' },
+      { label: 'Material', value: 'Roble europeo' },
+      { label: 'Peso', value: '460 g' },
+      { label: 'Acabado', value: 'Aceite mineral alimentario' },
+      { label: 'Uso', value: 'Todas las sartenes' },
+      { label: 'Cuidado', value: 'Lavar a mano + reaceitar' },
+    ],
+  },
+  {
+    slug: 'balanza-digital-5kg',
+    name: 'Balanza Digital 5 kg',
+    category: 'kitchen',
+    price: 64999,
+    short: 'Precisión de 1 g, tara y cronómetro integrado.',
+    description:
+      'Balanza de cocina de 5 kg con resolución de 1 g, función tara y temporizador. Superficie de acero, pantalla retroiluminada y apagado automático. Repostería y fermentación sin estimar.',
+    art: 'scale',
+    tone: 'dark',
+    tag: 'Gadget',
+    steel: 'Acero + ABS',
+    length: '5 kg / 1 g',
+    weight: '340 g',
+    origin: 'Corea del Sur',
+    care: 'Limpiar con paño húmedo; no sumergir.',
+    specs: [
+      { label: 'Capacidad', value: '5 kg' },
+      { label: 'Resolución', value: '1 g' },
+      { label: 'Funciones', value: 'Tara + cronómetro' },
+      { label: 'Pantalla', value: 'LCD retroiluminada' },
+      { label: 'Peso', value: '340 g' },
+      { label: 'Alimentación', value: 'AAA × 2 (incluidas)' },
+    ],
+  },
+  {
+    slug: 'termometro-sonda',
+    name: 'Termómetro de Sonda',
+    category: 'kitchen',
+    price: 52999,
+    short: 'Sonda plegable con respuesta en 3 segundos.',
+    description:
+      'Termómetro de sonda de -50 a 300 °C con lectura en 3 segundos, sonda plegable y alarma de punto. Para carnes al punto, aceite de fritura y leche para fermentación.',
+    art: 'thermo',
+    tone: 'blade',
+    tag: 'Gadget',
+    steel: 'Inoxidable',
+    length: '-50 / 300 °C',
+    weight: '56 g',
+    origin: 'China',
+    care: 'Limpiar la sonda tras cada uso.',
+    specs: [
+      { label: 'Rango', value: '-50 a 300 °C' },
+      { label: 'Precisión', value: '±1 °C' },
+      { label: 'Respuesta', value: '3 segundos' },
+      { label: 'Sonda', value: 'Plegable 140 mm' },
+      { label: 'Alarma', value: 'Punto ajustable' },
+      { label: 'Peso', value: '56 g' },
+    ],
+  },
+  {
+    slug: 'cafetera-prensa-1l',
+    name: 'Cafetera Prensa 1 L',
+    category: 'kitchen',
+    price: 42999,
+    short: 'Vidrio borosilicato y prensa de doble malla.',
+    description:
+      'Prensa francesa de 1 litro con jarra de borosilicato, filtro de doble malla de acero y presión suave. Extrae aceites completos del café molido sin papel ni cápsulas.',
+    art: 'press',
+    tone: 'dark',
+    steel: 'Vidrio + acero',
+    length: '1 L',
+    weight: '620 g',
+    origin: 'Portugal',
+    care: 'Desarmar el filtro para limpiar; evitar choques térmicos.',
+    specs: [
+      { label: 'Capacidad', value: '1 litro (4 tazas)' },
+      { label: 'Cuerpo', value: 'Vidrio borosilicato' },
+      { label: 'Filtro', value: 'Doble malla inox' },
+      { label: 'Peso', value: '620 g' },
+      { label: 'Mango', value: 'Termorresistente' },
+      { label: 'Uso', value: 'Café, té infusiones' },
+    ],
+  },
+  {
+    slug: 'molinillo-pimienta',
+    name: 'Molinillo de Pimienta',
+    category: 'kitchen',
+    price: 38999,
+    short: 'Mecanismo cerámico de 6 ajustes de molienda.',
+    description:
+      'Molinillo de 15 cm con mecanismo cerámico que no absorbe olores y molienda uniforme de pimienta y sal gruesa. Seis niveles del grind grueso al fino, con botón de cierre hermético.',
+    art: 'mill',
+    tone: 'wood',
+    steel: 'Cerámico + nogal',
+    length: '15 cm',
+    weight: '290 g',
+    origin: 'Alemania',
+    care: 'Limpiar en seco; no mojar el mecanismo.',
+    specs: [
+      { label: 'Mecanismo', value: 'Cerámico de 6 ajustes' },
+      { label: 'Alto', value: '15 cm' },
+      { label: 'Peso', value: '290 g' },
+      { label: 'Cuerpo', value: 'Nogal sellado' },
+      { label: 'Uso', value: 'Pimienta, sal, especias' },
+      { label: 'Cierre', value: 'Hermetico en base' },
+    ],
+  },
+  {
+    slug: 'hervidor-inox-17',
+    name: 'Hervidor Eléctrico 1,7 L',
+    category: 'kitchen',
+    price: 79999,
+    short: 'Corte a temperatura con 5 ajustes y autoapagado.',
+    description:
+      'Hervidor de acero de 1,7 litros con control de temperatura (60–100 °C) para té verde, matcha y café. Cuerpo sin cables a la vista, autoapagado y protección contra ebullición en seco.',
+    art: 'kettle',
+    tone: 'blade',
+    tag: 'Gadget',
+    steel: 'Acero doble pared',
+    length: '1,7 L',
+    weight: '1.1 kg',
+    origin: 'Japón',
+    care: 'Descalcificar cada 2 meses.',
+    specs: [
+      { label: 'Capacidad', value: '1,7 litros' },
+      { label: 'Temperatura', value: '60 / 80 / 90 / 100 °C' },
+      { label: 'Potencia', value: '2200 W' },
+      { label: 'Aislamiento', value: 'Doble pared fría' },
+      { label: 'Seguridad', value: 'Autoapagado + ebullición en seco' },
+      { label: 'Peso', value: '1.1 kg' },
+    ],
+  },
+  {
     slug: 'tabla-roble-poligonal',
     name: 'Tabla Corte Roble Poligonal',
-    category: 'cocina',
+    category: 'kitchen',
     price: 79999,
     short: 'Roble macizo con silueta facetada y canal de jugos.',
     description:
@@ -225,7 +487,6 @@ export const products: Product[] = [
     weight: '1.9 kg',
     origin: 'España',
     care: 'Lavar a mano, secar vertical, reaceitar mensual.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-board',
     specs: [
       { label: 'Material', value: 'Roble europeo macizo' },
       { label: 'Medidas', value: '45 × 30 × 4 cm' },
@@ -238,7 +499,7 @@ export const products: Product[] = [
   {
     slug: 'whetstone-1000-6000',
     name: 'Whetstone 1000 / 6000',
-    category: 'cocina',
+    category: 'kitchen',
     price: 89999,
     short: 'Piedra doble cara con base antideslizante.',
     description:
@@ -251,7 +512,6 @@ export const products: Product[] = [
     weight: '780 g',
     origin: 'Japón',
     care: 'Remojar 5-10 min antes de usar; secar al aire.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-whetstone',
     specs: [
       { label: 'Grits', value: '1000 / 6000' },
       { label: 'Tipo', value: 'Piedra de agua' },
@@ -264,7 +524,7 @@ export const products: Product[] = [
   {
     slug: 'guardacuchillos-bunker',
     name: 'Guardacuchillos Bunker',
-    category: 'cocina',
+    category: 'kitchen',
     price: 59999,
     short: 'Bloque poligonal con ranuras modulares para 8 piezas.',
     description:
@@ -276,7 +536,6 @@ export const products: Product[] = [
     weight: '2.4 kg',
     origin: 'España',
     care: 'Limpiar con paño seco; no sumergir.',
-    mpLink: 'https://www.mercadopago.com.ar/checkout/v1/placeholder-block',
     specs: [
       { label: 'Capacidad', value: '8 cuchillos + piedra' },
       { label: 'Material', value: 'Nogal + insertos acero' },
@@ -289,7 +548,7 @@ export const products: Product[] = [
 ]
 
 export const knifes = products.filter((p) => p.category === 'knifes')
-export const cocina = products.filter((p) => p.category === 'cocina')
+export const kitchen = products.filter((p) => p.category === 'kitchen')
 
 export function getProduct(slug: string) {
   return products.find((p) => p.slug === slug)

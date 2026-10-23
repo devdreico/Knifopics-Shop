@@ -64,6 +64,53 @@
   color-scheme: light;
 }
 
+/* ——— KITCHEN section: warm copper accent, same mono architecture ——— */
+[data-section='kitchen'] {
+  --bg: #fffdfb;
+  --bg-2: #f7f2ed;
+  --surface: #fffdfb;
+  --surface-2: #faf6f1;
+  --accent: #9a4416;
+  --accent-ink: #ffffff;
+  --beige: #e3c3a8;
+  --beige-soft: #f6e9de;
+  --steel: #7a421f;
+  --glass: rgba(255, 251, 247, 0.62);
+  --glass-strong: rgba(255, 252, 249, 0.9);
+}
+[data-section='kitchen'] ::selection {
+  background: var(--beige);
+}
+[data-section='kitchen'] body::before {
+  background-image:
+    linear-gradient(to right, rgba(154, 68, 22, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(154, 68, 22, 0.045) 1px, transparent 1px);
+}
+
+/* Section chips — static (never follow the active section) */
+.chip-knifes {
+  background: var(--ink);
+  color: #ffffff;
+}
+.chip-kitchen {
+  background: #9a4416;
+  color: #ffffff;
+}
+
+/* ——— Central section switcher (KNIVES | KITCHEN) ——— */
+.switcher {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  isolation: isolate;
+}
+.switcher-indicator {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 50%;
+  z-index: -1;
+}
+
 * {
   border-radius: 0 !important;
 }

@@ -28,7 +28,7 @@ export default function Wiki() {
           return (
             <Reveal key={s.id} delay={i * 0.08}>
               <Link
-                to={`/wiki/${s.id}`}
+                to={`/knifes/wiki/${s.id}`}
                 className="glass premium-shadow premium-shadow-hover clip-hero edge-highlight group flex h-full flex-col p-7 transition-all duration-200 hover:-translate-y-1.5"
               >
                 <span className="clip-tag relative z-10 inline-flex w-fit bg-[var(--ink)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--accent-ink)]">
@@ -64,7 +64,7 @@ export default function Wiki() {
           {sharpeningGuides.map((g, i) => (
             <Reveal key={g.slug} delay={i * 0.07}>
               <Link
-                to="/wiki/afilado"
+                to="/knifes/wiki/afilado"
                 className="glass clip-card flex h-full flex-col p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[var(--line-strong)]"
               >
                 <div className="flex items-center justify-between">
@@ -107,7 +107,7 @@ export default function Wiki() {
         </div>
         <Reveal className="mt-6">
           <Link
-            to="/wiki/datos"
+            to="/knifes/wiki/datos"
             className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.1em] text-[var(--ink)] hover:underline"
           >
             Ver todos los datos <ArrowRight size={15} />
@@ -121,7 +121,7 @@ export default function Wiki() {
           {latest.map((n, i) => (
             <Reveal key={n.slug} delay={i * 0.07}>
               <Link
-                to="/wiki/noticias"
+                to="/knifes/wiki/noticias"
                 className="glass clip-card flex h-full flex-col p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[var(--line-strong)]"
               >
                 <time className="font-mono-nums text-[11px] text-[var(--muted)]">
@@ -137,6 +137,53 @@ export default function Wiki() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section className="mt-16 grid gap-5 md:grid-cols-2">
+        <Reveal>
+          <Link
+            to="/knifes/guias"
+            className="glass clip-hero premium-shadow group flex h-full flex-col justify-between p-7 transition-all duration-200 hover:-translate-y-1"
+          >
+            <div>
+              <span className="clip-tag inline-flex bg-[var(--beige-soft)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] ring-1 ring-[var(--beige)]">
+                Modo app
+              </span>
+              <h3 className="mt-4 text-2xl font-extrabold uppercase leading-tight">
+                Pasos por cuchillo
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                Siete guías interactivas con stepper: empuñadura, técnica, filo y errores — tipo de
+                hoja por tipo de hoja.
+              </p>
+            </div>
+            <span className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em]">
+              Abrir guías <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <Link
+            to="/knifes/academia"
+            className="glass clip-hero premium-shadow group flex h-full flex-col justify-between p-7 transition-all duration-200 hover:-translate-y-1"
+          >
+            <div>
+              <span className="clip-tag inline-flex bg-[var(--ink)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
+                Mini app
+              </span>
+              <h3 className="mt-4 text-2xl font-extrabold uppercase leading-tight">
+                Academia del filo
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                Quiz identificador, calculadora de ángulos, guía de afilado con timer y
+                flashcards — cuatro módulos interactivos.
+              </p>
+            </div>
+            <span className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em]">
+              Abrir academia <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        </Reveal>
       </section>
     </div>
   )

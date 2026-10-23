@@ -1,6 +1,15 @@
 import { useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Loader2, Zap, Bike } from 'lucide-react'
+import {
+  ArrowRight,
+  Banknote,
+  Bike,
+  Check,
+  Loader2,
+  Send,
+  ShoppingBag,
+} from 'lucide-react'
 import SectionTitle from '../components/ui/SectionTitle'
 import PolygonButton from '../components/ui/PolygonButton'
 import Reveal from '../components/ui/Reveal'
@@ -11,7 +20,13 @@ const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID as string | undefined
 export default function Checkout() {
   const { lines, total, count, clear } = useCart()
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle')
-  const [mode, setMode] = useState<'cod' | 'mp'>('cod')
+
+  const knifesCount = lines
+    .filter((l) => l.product.category === 'knifes')
+    .reduce((s, l) => s + l.qty, 0)
+  const kitchenCount = lines
+    .filter((l) => l.product.category === 'kitchen')
+    .reduce((s, l) => s + l.qty, 0)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -21,7 +36,10 @@ export default function Checkout() {
     const fd = new FormData(form)
 
     const orderLines = lines
-      .map((l) => `${l.qty}× ${l.product.name} ($${(l.product.price * l.qty).toLocaleString('es-AR')})`)
+      .map(
+        (l) =>
+          `[${l.product.category === 'knifes' ? 'Knifes' : 'Kitchen'}] ${l.qty}× ${l.product.name} ($${(l.product.price * l.qty).toLocaleString('es-AR')})`,
+      )
       .join('\n')
 
     const payload = {
@@ -33,7 +51,9 @@ export default function Checkout() {
       direccion: String(fd.get('direccion') ?? ''),
       notas: String(fd.get('notas') ?? ''),
       productos: orderLines,
+      secciones: `Knifes: ${knifesCount} · Kitchen: ${kitchenCount}`,
       total_ars: String(total),
+      metodo_pago: 'Contra entrega (efectivo al recibir)',
     }
 
     if (!FORMSPREE_ID) {
@@ -58,202 +78,258 @@ export default function Checkout() {
     }
   }
 
+  /* ——— Vacío ——— */
   if (lines.length === 0 && status !== 'ok') {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-        <h1 className="text-3xl font-extrabold uppercase">No hay artículos</h1>
-        <p className="mt-3 text-[var(--muted)]">Agrega productos antes de pasar por checkout.</p>
-        <div className="mt-8 flex justify-center">
-          <PolygonButton to="/knifes">Ir a la tienda</PolygonButton>
+        <div className="glass clip-hero premium-shadow mx-auto flex max-w-md flex-col items-center p-10">
+          <ShoppingBag size={40} className="text-[var(--accent)]" />
+          <h1 className="mt-5 text-3xl font-extrabold uppercase">No hay artículos</h1>
+          <p className="mt-3 text-sm text-[var(--muted)]">
+            Armá tu pedido combinado antes de pasar por checkout.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <PolygonButton to="/knifes">Tienda Knifes</PolygonButton>
+            <PolygonButton to="/kitchen" variant="beige">Tienda Kitchen</PolygonButton>
+          </div>
         </div>
       </div>
     )
   }
 
+  /* ——— Éxito ——— */
   if (status === 'ok') {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center">
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="glass clip-hero premium-shadow p-10"
+          initial={{ scale: 0.85, opacity: 0, y: 24 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 160, damping: 18 }}
+          className="glass-strong premium-shadow clip-hero edge-highlight relative overflow-hidden p-10 text-left"
+          style={{ backdropFilter: 'blur(40px) saturate(150%)' }}
         >
-          <CheckCircle2 size={48} className="mx-auto text-[var(--accent)]" />
-          <h1 className="mt-5 text-3xl font-extrabold uppercase">Pedido recibido</h1>
-          <p className="mt-3 text-[var(--muted)]">
-            Gracias. Te contactaremos para coordinar la entrega contra pago.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <PolygonButton to="/knifes">Seguir explorando</PolygonButton>
-            <PolygonButton to="/wiki" variant="ghost">Ir a la wiki</PolygonButton>
+          <div className="absolute inset-0 grid-lines opacity-40" />
+          <div className="relative z-10">
+            <span className="clip-tag inline-flex items-center gap-2 bg-[var(--accent)] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--accent-ink)]">
+              <Check size={13} /> Pedido enviado
+            </span>
+            <h1 className="mt-5 text-3xl font-extrabold uppercase leading-tight sm:text-4xl">
+              Recibimos tu pedido
+            </h1>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+              Viajó por Formspree con tu selección. Te contactamos para coordinar la entrega y
+              pagás en efectivo cuando recibís.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <PolygonButton to="/">
+                Volver al inicio <ArrowRight size={15} />
+              </PolygonButton>
+              <PolygonButton to="/knifes" variant="ghost">
+                Seguir explorando
+              </PolygonButton>
+            </div>
           </div>
         </motion.div>
       </div>
     )
   }
 
+  /* ——— Formulario ——— */
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
       <SectionTitle
-        eyebrow="Checkout"
+        eyebrow="Checkout · Contra entrega"
         title="Finalizar pedido"
-        subtitle={`${count} artículo${count !== 1 ? 's' : ''} · total $${total.toLocaleString('es-AR')}`}
+        subtitle={`${count} artículo${count !== 1 ? 's' : ''} · total $${total.toLocaleString('es-AR')} · se despliega directo a Formspree`}
       />
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px]">
-        <Reveal>
-          <div className="glass clip-hero premium-shadow p-6 sm:p-8">
-            <div className="mb-6 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => setMode('cod')}
-                className={`btn-knife inline-flex items-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition ${
-                  mode === 'cod'
-                    ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
-                    : 'glass text-[var(--muted)] hover:text-[var(--ink)]'
-                }`}
-              >
-                <Bike size={15} /> Contra entrega
-              </button>
-              <button
-                type="button"
-                onClick={() => setMode('mp')}
-                className={`btn-knife inline-flex items-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition ${
-                  mode === 'mp'
-                    ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
-                    : 'glass text-[var(--muted)] hover:text-[var(--ink)]'
-                }`}
-              >
-                <Zap size={15} /> MercadoPago
-              </button>
-            </div>
+      {/* Orbes de color detrás del glass */}
+      <div className="pointer-events-none relative">
+        <div
+          aria-hidden="true"
+          className="absolute -left-20 top-10 h-64 w-64 rounded-full opacity-30 blur-3xl"
+          style={{ background: 'radial-gradient(circle, var(--beige) 0%, transparent 70%)' }}
+        />
+        <div
+          aria-hidden="true"
+          className="absolute -right-16 bottom-0 h-72 w-72 rounded-full opacity-30 blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(154,68,22,0.55) 0%, transparent 70%)' }}
+        />
 
-            <AnimatePresence mode="wait">
-              {mode === 'cod' ? (
-                <motion.form
-                  key="cod"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  onSubmit={onSubmit}
-                  className="grid gap-4 sm:grid-cols-2"
-                >
-                  <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-                    Nombre *
-                    <input name="nombre" required placeholder="Tu nombre" autoComplete="name" />
-                  </label>
-                  <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-                    Teléfono *
-                    <input name="telefono" required placeholder="+54 11 0000-0000" autoComplete="tel" />
-                  </label>
-                  <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-                    Email *
-                    <input name="email" type="email" required placeholder="vos@email.com" autoComplete="email" />
-                  </label>
-                  <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-                    Ciudad *
-                    <input name="ciudad" required placeholder="Buenos Aires" />
-                  </label>
-                  <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)] sm:col-span-2">
-                    Dirección *
-                    <input name="direccion" required placeholder="Calle, número, piso, depto" autoComplete="street-address" />
-                  </label>
-                  <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)] sm:col-span-2">
-                    Notas
-                    <textarea name="notas" rows={3} placeholder="Referencias, horarios…" />
-                  </label>
+        <div className="relative mt-10 grid gap-8 lg:grid-cols-[1fr_380px]">
+          {/* ——— Formulario glass ——— */}
+          <Reveal>
+            <div
+              className="glass-strong clip-hero edge-highlight premium-shadow relative overflow-hidden p-6 sm:p-9"
+              style={{ backdropFilter: 'blur(44px) saturate(150%)' }}
+            >
+              <div className="absolute inset-0 grid-lines opacity-40" />
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-center gap-3 border-b border-[var(--line)] pb-5">
+                  <span className="clip-tag inline-flex items-center gap-2 bg-[var(--accent)] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--accent-ink)]">
+                    <Bike size={13} /> Contra entrega
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
+                    <Banknote size={13} /> Pagás en efectivo al recibir
+                  </span>
+                  <span className="ml-auto hidden items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--muted)] sm:inline-flex">
+                    <Send size={13} /> vía Formspree
+                  </span>
+                </div>
 
-                  <div className="sm:col-span-2">
-                    {status === 'error' && (
-                      <p className="mb-3 text-sm font-semibold text-[var(--danger)]">
-                        No pudimos enviar el pedido. Revisá tu conexión o escribinos por WhatsApp.
-                      </p>
-                    )}
-                    <PolygonButton type="submit" className="w-full sm:w-auto" disabled={status === 'sending'}>
-                      {status === 'sending' ? (
-                        <>
-                          <Loader2 size={16} className="animate-spin" /> Enviando…
-                        </>
-                      ) : (
-                        <>Confirmar pedido contra entrega</>
+                <AnimatePresence mode="wait">
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    onSubmit={onSubmit}
+                    className="mt-6 grid gap-4 sm:grid-cols-2"
+                  >
+                    <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                      Nombre *
+                      <input name="nombre" required placeholder="Tu nombre" autoComplete="name" />
+                    </label>
+                    <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                      Teléfono *
+                      <input name="telefono" required placeholder="+54 11 0000-0000" autoComplete="tel" />
+                    </label>
+                    <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                      Email *
+                      <input name="email" type="email" required placeholder="vos@email.com" autoComplete="email" />
+                    </label>
+                    <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                      Ciudad *
+                      <input name="ciudad" required placeholder="Buenos Aires" />
+                    </label>
+                    <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)] sm:col-span-2">
+                      Dirección *
+                      <input name="direccion" required placeholder="Calle, número, piso, depto" autoComplete="street-address" />
+                    </label>
+                    <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)] sm:col-span-2">
+                      Notas
+                      <textarea name="notas" rows={3} placeholder="Referencias, horarios, indicaciones de entrega…" />
+                    </label>
+
+                    <div className="sm:col-span-2">
+                      {status === 'error' && (
+                        <p className="mb-3 text-sm font-semibold text-[var(--danger)]">
+                          No pudimos enviar el pedido. Revisá tu conexión o volvé a intentarlo.
+                        </p>
                       )}
-                    </PolygonButton>
-                    {!FORMSPREE_ID && (
-                      <p className="mt-3 text-[11px] text-[var(--muted)]">
-                        Demo: configurá <code>VITE_FORMSPREE_ID</code> en .env para envío real.
-                      </p>
-                    )}
-                  </div>
-                </motion.form>
-              ) : (
-                <motion.div
-                  key="mp"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  className="flex flex-col gap-4"
-                >
-                  <p className="text-sm leading-relaxed text-[var(--muted)]">
-                    Cada producto tiene su <strong className="text-[var(--ink)]">link único de
-                    MercadoPago</strong>. Para pagar una unidad al instante, abrí la ficha del
-                    producto y tocá «Pagar con MercadoPago».
-                  </p>
-                  <div className="flex flex-col gap-2">
-                    {lines.map((l) => (
-                      <div
-                        key={l.product.slug}
-                        className="glass clip-tag flex items-center justify-between gap-3 px-4 py-3"
-                      >
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-bold uppercase">{l.product.name}</p>
-                          <p className="text-xs text-[var(--muted)]">
-                            {l.qty}× ${l.product.price.toLocaleString('es-AR')}
-                          </p>
-                        </div>
-                        <a
-                          href={l.product.mpLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-knife shrink-0 bg-[var(--accent)] px-4 py-2 text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent-ink)] transition hover:brightness-110"
-                        >
-                          Pagar
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[11px] text-[var(--muted)]">
-                    Reemplazá los placeholders en <code>src/data/products.ts</code> con tus links
-                    reales de MercadoPago.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.12}>
-          <aside className="glass clip-hero premium-shadow sticky top-24 p-6">
-            <h2 className="border-b border-[var(--line)] pb-3 text-xs font-extrabold uppercase tracking-[0.2em]">
-              Tu pedido
-            </h2>
-            <ul className="mt-5 space-y-3 text-sm">
-              {lines.map((l) => (
-                <li key={l.product.slug} className="flex justify-between gap-3">
-                  <span className="text-[var(--muted)]">
-                    {l.qty}× {l.product.name}
-                  </span>
-                  <span className="font-semibold shrink-0">
-                    ${(l.product.price * l.qty).toLocaleString('es-AR')}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-5 border-t border-[var(--line)] pt-4 flex justify-between text-lg font-extrabold font-mono-nums">
-              <span>Total</span>
-              <span>${total.toLocaleString('es-AR')}</span>
+                      <PolygonButton type="submit" className="w-full sm:w-auto" disabled={status === 'sending'}>
+                        {status === 'sending' ? (
+                          <>
+                            <Loader2 size={16} className="animate-spin" /> Enviando…
+                          </>
+                        ) : (
+                          <>
+                            <Send size={15} /> Confirmar pedido contra entrega
+                          </>
+                        )}
+                      </PolygonButton>
+                      {!FORMSPREE_ID && (
+                        <p className="mt-3 text-[11px] text-[var(--muted)]">
+                          Demo: configurá <code>VITE_FORMSPREE_ID</code> en .env para envío real.
+                        </p>
+                      )}
+                    </div>
+                  </motion.form>
+                </AnimatePresence>
+              </div>
             </div>
-          </aside>
-        </Reveal>
+          </Reveal>
+
+          {/* ——— Resumen que se despliega ——— */}
+          <Reveal delay={0.12}>
+            <aside
+              className="glass-strong clip-hero edge-highlight premium-shadow sticky top-24 relative overflow-hidden p-6"
+              style={{ backdropFilter: 'blur(44px) saturate(150%)' }}
+            >
+              <div className="absolute inset-0 grid-lines opacity-30" />
+              <div className="relative z-10">
+                <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
+                  <h2 className="text-xs font-extrabold uppercase tracking-[0.2em]">Tu pedido</h2>
+                  <span className="font-mono-nums text-[11px] font-bold text-[var(--muted)]">
+                    {count} ítems
+                  </span>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {knifesCount > 0 && (
+                    <span className="clip-tag chip-knifes px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em]">
+                      Knifes · {knifesCount}
+                    </span>
+                  )}
+                  {kitchenCount > 0 && (
+                    <span className="clip-tag chip-kitchen px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em]">
+                      Kitchen · {kitchenCount}
+                    </span>
+                  )}
+                </div>
+
+                <motion.ul
+                  initial="hidden"
+                  animate="show"
+                  variants={{ show: { transition: { staggerChildren: 0.07 } } }}
+                  className="mt-5 space-y-3 text-sm"
+                >
+                  {lines.map((l) => (
+                    <motion.li
+                      key={l.product.slug}
+                      variants={{
+                        hidden: { opacity: 0, y: 14, filter: 'blur(6px)' },
+                        show: { opacity: 1, y: 0, filter: 'blur(0px)' },
+                      }}
+                      className="flex items-start justify-between gap-3"
+                    >
+                      <span className="text-[var(--muted)]">
+                        <span
+                          className={`mr-1.5 inline-block h-2 w-2 align-middle ${
+                            l.product.category === 'knifes' ? 'bg-[var(--ink)]' : 'bg-[#9a4416]'
+                          }`}
+                          aria-hidden="true"
+                        />
+                        {l.qty}× {l.product.name}
+                      </span>
+                      <span className="font-mono-nums shrink-0 font-semibold">
+                        ${(l.product.price * l.qty).toLocaleString('es-AR')}
+                      </span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+
+                <div className="mt-5 space-y-2 border-t border-[var(--line)] pt-4 text-sm">
+                  <div className="flex justify-between text-[var(--muted)]">
+                    <span>Subtotal</span>
+                    <span className="font-mono-nums">${total.toLocaleString('es-AR')}</span>
+                  </div>
+                  <div className="flex justify-between text-[var(--muted)]">
+                    <span>Envío</span>
+                    <span>A coordinar</span>
+                  </div>
+                  <div className="font-mono-nums flex justify-between border-t border-[var(--line)] pt-3 text-xl font-extrabold">
+                    <span>Total</span>
+                    <span>${total.toLocaleString('es-AR')}</span>
+                  </div>
+                </div>
+
+                <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-[var(--muted)]">
+                  <Check size={13} className="mt-0.5 shrink-0 text-[var(--accent)]" />
+                  Sin pago online: el pedido llega por Formspree y coordinamos la entrega contra
+                  efectivo.
+                </p>
+
+                <Link
+                  to="/carrito"
+                  className="btn-knife glass mt-5 inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition hover:border-[var(--accent)]"
+                >
+                  Editar carrito
+                </Link>
+              </div>
+            </aside>
+          </Reveal>
+        </div>
       </div>
     </div>
   )

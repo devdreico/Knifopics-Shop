@@ -78,7 +78,7 @@ export default function WikiSection() {
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="text-3xl font-extrabold uppercase">Sección no encontrada</h1>
         <div className="mt-8 flex justify-center">
-          <PolygonButton to="/wiki">Volver a la Wiki</PolygonButton>
+          <PolygonButton to="/knifes/wiki">Volver a la Wiki</PolygonButton>
         </div>
       </div>
     )
@@ -88,7 +88,7 @@ export default function WikiSection() {
     <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
       <Reveal>
         <Link
-          to="/wiki"
+          to="/knifes/wiki"
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
         >
           <ArrowLeft size={14} /> Wiki
@@ -118,7 +118,7 @@ export default function WikiSection() {
                 La Academia incluye una guía interactiva con timer real por sesión de afilado.
               </p>
               <div className="mt-5">
-                <PolygonButton to="/academia">Abrir Academia</PolygonButton>
+                <PolygonButton to="/knifes/academia">Abrir Academia</PolygonButton>
               </div>
             </div>
           </Reveal>

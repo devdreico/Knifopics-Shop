@@ -189,7 +189,7 @@ export const news: NewsItem[] = [
     body: [
       'Knifopics Shop presenta tres nuevas hojas damascus desarrolladas junto a talleres de Seki: chef 21 cm, gyuto 24 cm y petty 15 cm.',
       'Cada pieza lleva núcleo VG-10 con dureza de 60-61 HRC y mango de pakkawood estabilizado. La serie mantiene el lenguaje poligonal de la marca en el empaque y el estuche rígido.',
-      'Las unidades de lanzamiento están disponibles por link de MercadoPago único por producto y también en modalidad contra entrega dentro de la Argentina.',
+      'Las unidades de lanzamiento están disponibles exclusivamente contra entrega dentro de la Argentina, con pedido enviado por Formspree.',
     ],
   },
   {
@@ -199,7 +199,7 @@ export const news: NewsItem[] = [
     excerpt: 'Tres guías paso a paso: piedra de agua, ángulos por tipo de hoja y mantenimiento.',
     tag: 'Wiki',
     body: [
-      'Sumamos a /wiki/afilado tres manuales completos pensados para pasar de cero a un filo de papel en una tarde.',
+      'Sumamos a /knifes/wiki/afilado tres manuales completos pensados para pasar de cero a un filo de papel en una tarde.',
       'Los manuales cubren remojo de piedra, detección de reborde, pulido 6000 y rutina de honing entre sesiones.',
       'Cada guía se complementa con los módulos de la Academia: calculadora de ángulo, quiz y flashcards.',
     ],
@@ -211,7 +211,7 @@ export const news: NewsItem[] = [
     excerpt: 'Quiz, calculadora, guía interactiva y flashcards — cuatro módulos en un solo lugar.',
     tag: 'Producto',
     body: [
-      'Lanzamos /academia: un hub interactivo con cuatro módulos para dominar teoría y práctica del filo.',
+      'Lanzamos /knifes/academia: un hub interactivo con cuatro módulos para dominar teoría y práctica del filo.',
       'Identifica cuchillos con el quiz, calcula ángulos y grano según tu acero, sigue la guía de afilado con timer y repasa datos con el simulador de memoria.',
       'Todo funciona offline en el navegador — sin cuentas, sin fricción.',
     ],
