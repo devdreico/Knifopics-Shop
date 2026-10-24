@@ -1,31 +1,13 @@
-import type { ArtKind, Tone } from '../components/ui/KnifeArt'
+import type { Product } from './types'
 
-export type Category = 'knifes' | 'kitchen'
-
-export type Product = {
-  slug: string
-  name: string
-  category: Category
-  price: number
-  short: string
-  description: string
-  art: ArtKind
-  tone: Tone
-  tag?: string
-  steel?: string
-  length?: string
-  hardness?: string
-  weight?: string
-  origin?: string
-  care?: string
-  specs: { label: string; value: string }[]
-}
+export type { Category, Product } from './types'
 
 export const products: Product[] = [
   {
     slug: 'chef-damascus-21',
     name: 'Chef Damascus 21 cm',
     category: 'knifes',
+    family: 'Chef',
     price: 189999,
     short: 'Acero damascus 67 capas, núcleo VG-10 y filo espejo.',
     description:
@@ -52,6 +34,7 @@ export const products: Product[] = [
     slug: 'santoku-nero-18',
     name: 'Santoku Nero 18 cm',
     category: 'knifes',
+    family: 'Santoku',
     price: 149999,
     short: 'Geometría tres virtudes con acabado negro nitro.',
     description:
@@ -78,6 +61,7 @@ export const products: Product[] = [
     slug: 'nakiri-vegetal-17',
     name: 'Nakiri Vegetal 17 cm',
     category: 'knifes',
+    family: 'Vegetales',
     price: 129999,
     short: 'Cuchillo vegetal recto de corte perpendicular limpio.',
     description:
@@ -103,6 +87,7 @@ export const products: Product[] = [
     slug: 'paring-essentials-9',
     name: 'Paring Essentials 9 cm',
     category: 'knifes',
+    family: 'Puntilla',
     price: 69999,
     short: 'El pelador preciso para retoques, mondar y brunoise.',
     description:
@@ -128,6 +113,7 @@ export const products: Product[] = [
     slug: 'bread-ondulado-26',
     name: 'Bread Ondulado 26 cm',
     category: 'knifes',
+    family: 'Pan',
     price: 99999,
     short: 'Dentado agresivo que muerde corteza sin aplastar miga.',
     description:
@@ -153,6 +139,7 @@ export const products: Product[] = [
     slug: 'cleaver-carbon-20',
     name: 'Cleaver Carbon 20 cm',
     category: 'knifes',
+    family: 'Hachuela',
     price: 159999,
     short: 'Carbon steel con patina que cuenta tu historia.',
     description:
@@ -179,6 +166,7 @@ export const products: Product[] = [
     slug: 'set-steak-mistral-x4',
     name: 'Set Steak Mistral ×4',
     category: 'knifes',
+    family: 'Mesa',
     price: 119999,
     short: 'Cuatro steak de mesa con diseño poligonal facetado.',
     description:
@@ -205,6 +193,7 @@ export const products: Product[] = [
     slug: 'sarten-hierro-26',
     name: 'Sartén Hierro Fundido 26 cm',
     category: 'kitchen',
+    family: 'Sartenes',
     price: 129999,
     short: 'Hierro fundido con curado de aceite, del fuego a la mesa.',
     description:
@@ -230,6 +219,7 @@ export const products: Product[] = [
     slug: 'wok-carbon-30',
     name: 'Wok Carbon 30 cm',
     category: 'kitchen',
+    family: 'Woks',
     price: 109999,
     short: 'Acero al carbono de pared delgada para fuego vivo.',
     description:
@@ -255,6 +245,7 @@ export const products: Product[] = [
     slug: 'dutch-oven-55',
     name: 'Dutch Oven Esmaltada 5,5 L',
     category: 'kitchen',
+    family: 'Ollas y cacerolas',
     price: 189999,
     short: 'Esmalte cobre sobre hierro: guisos lentos sin atajos.',
     description:
@@ -280,6 +271,7 @@ export const products: Product[] = [
     slug: 'olla-inox-5l',
     name: 'Olla Inoxidable 5 L',
     category: 'kitchen',
+    family: 'Ollas y cacerolas',
     price: 139999,
     short: 'Tres capas de acero con fondo inducción y tapa de vidrio.',
     description:
@@ -304,6 +296,7 @@ export const products: Product[] = [
     slug: 'batidor-balloon',
     name: 'Batidor Balloon Profesional',
     category: 'kitchen',
+    family: 'Utensilios',
     price: 27999,
     short: 'Aros de acero tensados para airear sin fatiga.',
     description:
@@ -328,6 +321,7 @@ export const products: Product[] = [
     slug: 'set-utensilios-roble',
     name: 'Set Utensilios Roble ×5',
     category: 'kitchen',
+    family: 'Utensilios',
     price: 46999,
     short: 'Cuchara, pala, espátula, horqueta y rascador en roble.',
     description:
@@ -353,6 +347,7 @@ export const products: Product[] = [
     slug: 'balanza-digital-5kg',
     name: 'Balanza Digital 5 kg',
     category: 'kitchen',
+    family: 'Medición',
     price: 64999,
     short: 'Precisión de 1 g, tara y cronómetro integrado.',
     description:
@@ -378,6 +373,7 @@ export const products: Product[] = [
     slug: 'termometro-sonda',
     name: 'Termómetro de Sonda',
     category: 'kitchen',
+    family: 'Medición',
     price: 52999,
     short: 'Sonda plegable con respuesta en 3 segundos.',
     description:
@@ -403,6 +399,7 @@ export const products: Product[] = [
     slug: 'cafetera-prensa-1l',
     name: 'Cafetera Prensa 1 L',
     category: 'kitchen',
+    family: 'Bebidas',
     price: 42999,
     short: 'Vidrio borosilicato y prensa de doble malla.',
     description:
@@ -427,6 +424,7 @@ export const products: Product[] = [
     slug: 'molinillo-pimienta',
     name: 'Molinillo de Pimienta',
     category: 'kitchen',
+    family: 'Accesorios',
     price: 38999,
     short: 'Mecanismo cerámico de 6 ajustes de molienda.',
     description:
@@ -451,6 +449,7 @@ export const products: Product[] = [
     slug: 'hervidor-inox-17',
     name: 'Hervidor Eléctrico 1,7 L',
     category: 'kitchen',
+    family: 'Bebidas',
     price: 79999,
     short: 'Corte a temperatura con 5 ajustes y autoapagado.',
     description:
@@ -476,6 +475,7 @@ export const products: Product[] = [
     slug: 'tabla-roble-poligonal',
     name: 'Tabla Corte Roble Poligonal',
     category: 'kitchen',
+    family: 'Preparación',
     price: 79999,
     short: 'Roble macizo con silueta facetada y canal de jugos.',
     description:
@@ -500,6 +500,7 @@ export const products: Product[] = [
     slug: 'whetstone-1000-6000',
     name: 'Whetstone 1000 / 6000',
     category: 'kitchen',
+    family: 'Afilado y cuidado',
     price: 89999,
     short: 'Piedra doble cara con base antideslizante.',
     description:
@@ -525,6 +526,7 @@ export const products: Product[] = [
     slug: 'guardacuchillos-bunker',
     name: 'Guardacuchillos Bunker',
     category: 'kitchen',
+    family: 'Afilado y cuidado',
     price: 59999,
     short: 'Bloque poligonal con ranuras modulares para 8 piezas.',
     description:

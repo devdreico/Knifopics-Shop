@@ -136,7 +136,7 @@ export default function Navbar() {
 
             <button
               type="button"
-              className="btn-knife flex h-10 w-10 items-center justify-center border border-[var(--line)] bg-[var(--surface)] md:hidden"
+              className="btn-knife flex h-10 w-10 items-center justify-center border border-[var(--line)] bg-[var(--surface)] lg:hidden"
               onClick={() => setOpen((v) => !v)}
               aria-label="Menú"
               aria-expanded={open}
@@ -161,7 +161,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="glass-strong overflow-hidden border-b border-[var(--line)] md:hidden"
+            className="glass-strong overflow-hidden border-b border-[var(--line)] lg:hidden"
           >
             <nav className="flex flex-col gap-1 p-4" aria-label="Móvil">
               {[...primary, ...extra].map((l) => (

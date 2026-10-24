@@ -120,7 +120,7 @@ export default function Product() {
 
           <p className="mt-3 flex items-center gap-2 text-xs text-[var(--muted)]">
             <Check size={14} className="text-[var(--accent)]" />
-            Pago 100 % contra entrega · pedido enviado por Formspree
+            Pago 100 % contra entrega · sin pago online
             {count > 0 && <> · {count} en el carrito combinado</>}
           </p>
 

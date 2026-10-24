@@ -158,7 +158,7 @@ export default function Cart() {
 
             <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-[var(--muted)]">
               <Bike size={14} className="mt-0.5 shrink-0" />
-              Todo contra entrega: confirmás el pedido por Formspree y pagás en efectivo al recibir.
+              Confirmás el pedido en el checkout y pagás en efectivo al recibir, sin pago online.
             </p>
           </aside>
         </Reveal>

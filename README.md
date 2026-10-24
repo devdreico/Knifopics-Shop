@@ -54,7 +54,7 @@ npm run dev
 
 ### Variables `.env`
 
-- `VITE_FORMSPREE_ID` — ID del formulario Formspree para pedidos contra entrega. Sin él, el checkout corre en modo demo (log + éxito local).
+- `VITE_FORMSPREE_ID` — ID del formulario Formspree para pedidos contra entrega. Sin él, el checkout queda en modo demostración: no envía pedidos ni vacía el carrito.
 
 ## Scripts
 

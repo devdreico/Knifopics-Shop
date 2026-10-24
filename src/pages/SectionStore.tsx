@@ -13,7 +13,7 @@ type Sort = 'featured' | 'asc' | 'desc'
 
 const ALL = 'all'
 
-const familyOf = (p: Product): string | undefined => (p as { family?: string }).family
+const familyOf = (p: Product): string | undefined => p.family
 const steelOf = (p: Product): string => (p.steel ?? '').split('/')[0].trim()
 
 const promo: Record<StoreSection, { title: string; body: string }> = {

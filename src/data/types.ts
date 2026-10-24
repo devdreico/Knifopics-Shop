@@ -8,6 +8,7 @@ export type Product = {
   slug: string
   name: string
   category: Category
+  family?: string
   price: number
   short: string
   description: string

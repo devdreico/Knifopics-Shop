@@ -19,7 +19,7 @@ const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID as string | undefined
 
 export default function Checkout() {
   const { lines, total, count, clear } = useCart()
-  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'demo'>('idle')
 
   const knifesCount = lines
     .filter((l) => l.product.category === 'knifes')
@@ -57,9 +57,7 @@ export default function Checkout() {
     }
 
     if (!FORMSPREE_ID) {
-      console.info('[Checkout] Formspree ID no configurado — demo local', payload)
-      setStatus('ok')
-      clear()
+      setStatus('demo')
       return
     }
 
@@ -186,6 +184,15 @@ export default function Checkout() {
                     onSubmit={onSubmit}
                     className="mt-6 grid gap-4 sm:grid-cols-2"
                   >
+                    {status === 'demo' && (
+                      <p
+                        role="status"
+                        className="sm:col-span-2 border border-[var(--line)] bg-[var(--surface-2)] p-3 text-sm font-semibold text-[var(--ink)]"
+                      >
+                        Modo demostración: el pedido no se envió y el carrito sigue guardado.
+                        Configurá <code>VITE_FORMSPREE_ID</code> para habilitar pedidos reales.
+                      </p>
+                    )}
                     <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
                       Nombre *
                       <input name="nombre" required placeholder="Tu nombre" autoComplete="name" />
@@ -316,8 +323,10 @@ export default function Checkout() {
 
                 <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-[var(--muted)]">
                   <Check size={13} className="mt-0.5 shrink-0 text-[var(--accent)]" />
-                  Sin pago online: el pedido llega por Formspree y coordinamos la entrega contra
-                  efectivo.
+                  Sin pago online:{' '}
+                  {FORMSPREE_ID
+                    ? 'el pedido llega por Formspree y coordinamos la entrega contra efectivo.'
+                    : 'en modo demostración no se envían pedidos. Configurá Formspree para recibirlos.'}
                 </p>
 
                 <Link

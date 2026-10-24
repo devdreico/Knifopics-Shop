@@ -44,7 +44,7 @@ const knifesDiscovery: DiscoveryCard[] = [
     to: '/knifes/noticias',
     icon: Newspaper,
     title: 'Noticias del filo',
-    body: 'Lanzamientos, industria y tendencias de cuchillería, actualizadas.',
+    body: 'Lanzamientos, industria y tendencias de cuchillería.',
   },
   {
     to: '/knifes/academia',
@@ -83,7 +83,7 @@ const kitchenDiscovery: DiscoveryCard[] = [
     to: '/kitchen/noticias',
     icon: Newspaper,
     title: 'Noticias de cocina',
-    body: 'Tendencias, recetas y novedades de gastronomía, actualizadas.',
+    body: 'Tendencias, recetas y novedades de gastronomía.',
   },
   {
     to: '/kitchen/academia',
@@ -170,10 +170,9 @@ export function sectionNav(section: Section): SectionNav {
 }
 
 export function sectionFromPath(pathname: string): Section {
-  if (pathname === '/' || pathname.startsWith('/kitchen')) {
-    return pathname.startsWith('/kitchen') ? 'kitchen' : 'home'
-  }
-  if (pathname.startsWith('/knifes')) return 'knifes'
+  if (pathname === '/') return 'home'
+  if (pathname === '/kitchen' || pathname.startsWith('/kitchen/')) return 'kitchen'
+  if (pathname === '/knifes' || pathname.startsWith('/knifes/')) return 'knifes'
   return 'home'
 }
 

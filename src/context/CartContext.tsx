@@ -9,17 +9,13 @@ import {
 } from 'react'
 import { getProduct } from '../data/catalog'
 import type { Product } from '../data/types'
+import { clampQty, parseCart, serializeCart, type StoredLine } from './cartStorage'
 
 /** Línea resuelta contra el catálogo (lo que consumen las páginas). */
 export type CartLine = {
   product: Product
   qty: number
 }
-
-/** Formato persistido en localStorage (v2): solo slug + qty. */
-export type StoredLine = { slug: string; qty: number }
-
-type StoredCart = { version: 2; lines: StoredLine[] }
 
 type CartCtx = {
   lines: CartLine[]
@@ -35,51 +31,6 @@ type CartCtx = {
 const CartContext = createContext<CartCtx | null>(null)
 
 const STORAGE = 'knifopics-cart'
-const MAX_QTY = 99
-
-function clampQty(n: unknown): number {
-  const q = typeof n === 'number' && Number.isFinite(n) ? Math.floor(n) : 1
-  return Math.min(Math.max(q, 1), MAX_QTY)
-}
-
-/**
- * Parsea cualquier formato guardado (v2 `{version,lines}`, legado `[{product,qty}]`,
- * o basura) a líneas normalizadas. No valida contra catálogo.
- */
-export function parseCart(raw: string | null): StoredLine[] {
-  if (!raw) return []
-  try {
-    const data: unknown = JSON.parse(raw)
-    if (!Array.isArray(data)) return []
-    const out: StoredLine[] = []
-    for (const entry of data as unknown[]) {
-      if (entry && typeof entry === 'object') {
-        const e = entry as { slug?: unknown; qty?: unknown; product?: { slug?: unknown } }
-        const slug =
-          typeof e.slug === 'string'
-            ? e.slug
-            : typeof e.product?.slug === 'string'
-              ? e.product.slug
-              : null
-        if (slug) out.push({ slug, qty: clampQty(e.qty) })
-      }
-    }
-    return dedupe(out)
-  } catch {
-    return []
-  }
-}
-
-export function serializeCart(lines: StoredLine[]): string {
-  const cart: StoredCart = { version: 2, lines: lines.map((l) => ({ slug: l.slug, qty: l.qty })) }
-  return JSON.stringify(cart)
-}
-
-function dedupe(lines: StoredLine[]): StoredLine[] {
-  const map = new Map<string, number>()
-  for (const l of lines) map.set(l.slug, (map.get(l.slug) ?? 0) + l.qty)
-  return [...map.entries()].map(([slug, qty]) => ({ slug, qty: clampQty(qty) }))
-}
 
 function resolve(lines: StoredLine[]): CartLine[] {
   const out: CartLine[] = []

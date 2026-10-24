@@ -39,7 +39,7 @@ const steps = [
   {
     icon: Bike,
     title: 'Contra entrega total',
-    body: 'Tu pedido viaja por Formspree en un formulario glassmorphism. Pagás en efectivo cuando recibís.',
+    body: 'Confirmá el pedido desde el checkout. Pagás en efectivo cuando recibís.',
   },
 ]
 
@@ -227,8 +227,8 @@ export default function Home() {
                   Todo contra entrega, cero fricción
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                  Armás el pedido, lo desplegás en nuestro formulario glassmorphism y viaja a
-                  Formspree. Coordinamos la entrega y pagás en efectivo al recibir.
+                  Armás el pedido desde el checkout y coordinás la entrega. Pagás en efectivo al
+                  recibir, sin pago online.
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap gap-3">
