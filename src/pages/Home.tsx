@@ -6,20 +6,23 @@ import SectionTitle from '../components/ui/SectionTitle'
 import Reveal from '../components/ui/Reveal'
 import ProductCard from '../components/ui/ProductCard'
 import KnifeArt from '../components/ui/KnifeArt'
-import { knifes, kitchen } from '../data/products'
+import { getProducts } from '../data/catalog'
+
+const knifes = getProducts('knifes')
+const kitchen = getProducts('kitchen')
 
 const knifesFeatures = [
-  'Tienda SOLO cuchillos',
-  'Pasos por cuchillo, tipo a tipo',
-  'Wiki completísima del filo',
-  'Academia: quiz, timer y calculadora',
+  'Tienda SOLO cuchillos premium',
+  'Guías y wiki completas del filo',
+  'Noticias de cuchillería',
+  'Academia, culturas y rankings',
 ]
 
 const kitchenFeatures = [
   'Tienda de sartenes y gadgets',
-  'Guías de cocina a paso',
-  'Culturas gastronómicas del mundo',
-  'Rankings famosos y cultura',
+  'Guías y wiki de cocina',
+  'Noticias gastronómicas',
+  'Academia, culturas y rankings',
 ]
 
 const steps = [
@@ -100,14 +103,14 @@ export default function Home() {
             className="group relative flex flex-1 flex-col justify-center overflow-hidden px-6 py-16 transition-[flex-grow] duration-500 ease-out hover:flex-[1.3] sm:px-10 md:py-20"
             style={{
               background:
-                'linear-gradient(160deg, rgba(154,68,22,0.05) 0%, rgba(154,68,22,0.14) 100%)',
+                'linear-gradient(160deg, rgba(253,230,138,0.32) 0%, rgba(255,237,213,0.7) 100%)',
             }}
           >
             <div
               className="pointer-events-none absolute inset-0 grid-lines opacity-60"
               style={{
                 backgroundImage:
-                  'linear-gradient(to right, rgba(154,68,22,0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(154,68,22,0.07) 1px, transparent 1px)',
+                  'linear-gradient(to right, rgba(194,65,12,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(194,65,12,0.06) 1px, transparent 1px)',
               }}
             />
             <div className="pointer-events-none absolute -left-16 top-1/2 w-[380px] -translate-y-1/2 opacity-20 transition-transform duration-700 group-hover:scale-110 sm:w-[460px] md:left-auto md:-right-16">
@@ -122,7 +125,7 @@ export default function Home() {
             >
               <span
                 className="clip-tag inline-flex px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.28em] text-white"
-                style={{ background: '#9a4416' }}
+                style={{ background: 'var(--kitchen-accent)' }}
               >
                 Sección 02
               </span>
@@ -139,7 +142,7 @@ export default function Home() {
                     <span
                       className="h-1.5 w-6 shrink-0"
                       aria-hidden="true"
-                      style={{ background: '#9a4416' }}
+                      style={{ background: 'var(--kitchen-accent)' }}
                     />
                     {f}
                   </li>
@@ -147,7 +150,7 @@ export default function Home() {
               </ul>
               <span
                 className="btn-knife mt-9 inline-flex items-center gap-2 px-7 py-3.5 pr-9 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all hover:brightness-110"
-                style={{ background: '#9a4416' }}
+                style={{ background: 'var(--kitchen-accent)' }}
               >
                 Entrar a Kitchen <ArrowRight size={16} />
               </span>

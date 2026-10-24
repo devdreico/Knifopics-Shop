@@ -1,43 +1,51 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, ShoppingBag, X } from 'lucide-react'
+import { ChevronDown, Menu, ShoppingBag, X } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import SectionSwitcher from './SectionSwitcher'
-import { sectionFromPath } from '../../hooks/useSection'
-
-type LinkItem = { to: string; label: string; end?: boolean }
-
-const knifesLinks: LinkItem[] = [
-  { to: '/knifes', label: 'Tienda', end: true },
-  { to: '/knifes/guias', label: 'Guías' },
-  { to: '/knifes/wiki', label: 'Wiki' },
-  { to: '/knifes/academia', label: 'Academia' },
-]
-
-const kitchenLinks: LinkItem[] = [
-  { to: '/kitchen', label: 'Tienda', end: true },
-  { to: '/kitchen/guias', label: 'Guías' },
-  { to: '/kitchen/culturas', label: 'Culturas' },
-  { to: '/kitchen/rankings', label: 'Rankings' },
-]
-
-const homeLinks: LinkItem[] = [
-  { to: '/knifes/guias', label: 'Guías' },
-  { to: '/knifes/wiki', label: 'Wiki' },
-  { to: '/knifes/academia', label: 'Academia' },
-  { to: '/kitchen/culturas', label: 'Culturas' },
-  { to: '/kitchen/rankings', label: 'Rankings' },
-]
+import { sectionFromPath, sectionNav, type NavLink as NavItem } from '../../sections/config'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
   const { count, bump } = useCart()
   const { pathname } = useLocation()
 
-  const isHome = pathname === '/'
-  const section = isHome ? null : sectionFromPath(pathname)
-  const links = isHome ? homeLinks : section === 'kitchen' ? kitchenLinks : knifesLinks
+  const section = sectionFromPath(pathname)
+  const { primary, extra } = sectionNav(section)
+
+  useEffect(() => {
+    setOpen(false)
+    setMoreOpen(false)
+  }, [pathname])
+
+  const linkClass = (isActive: boolean) =>
+    `clip-tag relative px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors duration-150 ${
+      isActive ? 'text-[var(--ink)]' : 'text-[var(--muted)] hover:text-[var(--ink)]'
+    }`
+
+  const renderItem = (l: NavItem) => (
+    <NavLink
+      key={l.to}
+      to={l.to}
+      end={l.end}
+      className={({ isActive }) => linkClass(isActive)}
+    >
+      {({ isActive }) => (
+        <>
+          {l.label}
+          {isActive && (
+            <motion.span
+              layoutId="nav-underline"
+              className="absolute inset-x-2 bottom-0 h-[2px] bg-[var(--accent)]"
+              transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+            />
+          )}
+        </>
+      )}
+    </NavLink>
+  )
 
   return (
     <header className="sticky top-0 z-50">
@@ -55,36 +63,59 @@ export default function Navbar() {
 
           {/* Barra central 50/50 — escritorio */}
           <div className="hidden justify-self-center md:block">
-            <SectionSwitcher active={section} id="section-tab" />
+            <SectionSwitcher active={section === 'home' ? null : section} id="section-tab" />
           </div>
 
           <div className="flex items-center justify-end gap-2">
             <nav className="mr-1 hidden items-center gap-0.5 lg:flex" aria-label="Sección">
-              {links.map((l) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  end={l.end}
-                  className={({ isActive }) =>
-                    `clip-tag relative px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors duration-150 ${
-                      isActive ? 'text-[var(--ink)]' : 'text-[var(--muted)] hover:text-[var(--ink)]'
-                    }`
-                  }
+              {primary.map(renderItem)}
+
+              {extra.length > 0 && (
+                <div
+                  className="relative"
+                  onMouseEnter={() => setMoreOpen(true)}
+                  onMouseLeave={() => setMoreOpen(false)}
                 >
-                  {({ isActive }) => (
-                    <>
-                      {l.label}
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          className="absolute inset-x-2 bottom-0 h-[2px] bg-[var(--accent)]"
-                          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                        />
-                      )}
-                    </>
-                  )}
-                </NavLink>
-              ))}
+                  <button
+                    type="button"
+                    className="clip-tag flex items-center gap-1 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--muted)] transition-colors duration-150 hover:text-[var(--ink)]"
+                    aria-expanded={moreOpen}
+                    aria-haspopup="true"
+                    onClick={() => setMoreOpen((v) => !v)}
+                    onFocus={() => setMoreOpen(true)}
+                  >
+                    Más
+                    <ChevronDown size={12} className={`transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {moreOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 6 }}
+                        transition={{ duration: 0.16 }}
+                        className="glass-strong absolute right-0 top-full z-50 min-w-[11rem] border border-[var(--line)] p-1.5 shadow-[var(--shadow-p)]"
+                      >
+                        {extra.map((l) => (
+                          <NavLink
+                            key={l.to}
+                            to={l.to}
+                            className={({ isActive }) =>
+                              `block px-3.5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors ${
+                                isActive
+                                  ? 'bg-[var(--accent)] text-[var(--accent-ink)]'
+                                  : 'text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]'
+                              }`
+                            }
+                          >
+                            {l.label}
+                          </NavLink>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </nav>
 
             <Link
@@ -118,7 +149,7 @@ export default function Navbar() {
         {/* Barra central 50/50 — móvil (fila inferior a todo el ancho) */}
         <div className="border-t border-[var(--line)] px-4 py-2 md:hidden">
           <div className="flex justify-center">
-            <SectionSwitcher active={section} id="section-tab-mobile" />
+            <SectionSwitcher active={section === 'home' ? null : section} id="section-tab-mobile" />
           </div>
         </div>
       </div>
@@ -133,7 +164,7 @@ export default function Navbar() {
             className="glass-strong overflow-hidden border-b border-[var(--line)] md:hidden"
           >
             <nav className="flex flex-col gap-1 p-4" aria-label="Móvil">
-              {links.map((l) => (
+              {[...primary, ...extra].map((l) => (
                 <NavLink
                   key={l.to}
                   to={l.to}

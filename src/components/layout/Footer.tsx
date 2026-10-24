@@ -1,33 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Github, Instagram, Youtube } from 'lucide-react'
+import { footerColumns } from '../../sections/config'
 
-const columns: { title: string; links: { to: string; label: string }[] }[] = [
-  {
-    title: 'Knifes',
-    links: [
-      { to: '/knifes', label: 'Catálogo de cuchillos' },
-      { to: '/knifes/guias', label: 'Pasos por cuchillo' },
-      { to: '/knifes/wiki', label: 'Wiki del filo' },
-      { to: '/knifes/academia', label: 'Academia interactiva' },
-    ],
-  },
-  {
-    title: 'Kitchen',
-    links: [
-      { to: '/kitchen', label: 'Catálogo de cocina' },
-      { to: '/kitchen/guias', label: 'Guías de cocina' },
-      { to: '/kitchen/culturas', label: 'Culturas del mundo' },
-      { to: '/kitchen/rankings', label: 'Rankings' },
-    ],
-  },
-  {
-    title: 'Compra',
-    links: [
-      { to: '/carrito', label: 'Carrito combinado' },
-      { to: '/checkout', label: 'Checkout contra entrega' },
-      { to: '/', label: 'Elegir sección' },
-    ],
-  },
+const columns = footerColumns()
+
+const socials = [
+  { icon: Instagram, label: 'Instagram' },
+  { icon: Youtube, label: 'YouTube' },
+  { icon: Github, label: 'GitHub' },
 ]
 
 export default function Footer() {
@@ -43,15 +23,11 @@ export default function Footer() {
             height={48}
           />
           <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--muted)]">
-            50 % cuchillos, 50 % cocina. Wiki del filo, guías interactivas, culturas gastronómicas
-            y rankings — un solo carrito para todo, pago contra entrega.
+            50 % cuchillos, 50 % cocina. Tiendas, guías, wikis, noticias, academia, culturas y
+            rankings — un solo carrito para todo, pago contra entrega.
           </p>
           <div className="mt-5 flex gap-3">
-            {[
-              { icon: Instagram, label: 'Instagram' },
-              { icon: Youtube, label: 'YouTube' },
-              { icon: Github, label: 'GitHub' },
-            ].map(({ icon: Icon, label }) => (
+            {socials.map(({ icon: Icon, label }) => (
               <a
                 key={label}
                 href="#"

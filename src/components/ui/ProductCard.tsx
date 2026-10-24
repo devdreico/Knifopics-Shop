@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { ShoppingCart } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import type { Product } from '../../data/products'
+import type { Product } from '../../data/types'
 import { useCart } from '../../context/CartContext'
 import KnifeArt from './KnifeArt'
 

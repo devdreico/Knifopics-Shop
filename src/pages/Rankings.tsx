@@ -48,7 +48,7 @@ function RankingList({ ranking }: { ranking: Ranking }) {
                 {item.name}
               </h3>
               {item.meta && (
-                <span className="clip-tag bg-[var(--surface-2)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a4416] ring-1 ring-[var(--line)]">
+                <span className="clip-tag bg-[var(--surface-2)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--accent)] ring-1 ring-[var(--line)]">
                   {item.meta}
                 </span>
               )}

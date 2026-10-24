@@ -1,17 +1,28 @@
 import { useParams, Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Check, ShoppingBag, Banknote } from 'lucide-react'
 import KnifeArt from '../components/ui/KnifeArt'
 import PolygonButton from '../components/ui/PolygonButton'
 import Reveal from '../components/ui/Reveal'
 import ProductCard from '../components/ui/ProductCard'
-import { getProduct, products } from '../data/products'
+import { getAllProducts, getProduct } from '../data/catalog'
 import { useCart } from '../context/CartContext'
 
 export default function Product() {
   const { slug } = useParams()
   const product = slug ? getProduct(slug) : undefined
   const { add, count } = useCart()
+  const category = product?.category ?? null
+
+  useEffect(() => {
+    if (!category) return
+    const prev = document.documentElement.dataset.section
+    document.documentElement.dataset.section = category
+    return () => {
+      document.documentElement.dataset.section = prev ?? 'home'
+    }
+  }, [category])
 
   if (!product) {
     return (
@@ -27,7 +38,9 @@ export default function Product() {
   }
 
   const isKnifes = product.category === 'knifes'
-  const related = products.filter((p) => p.slug !== product.slug && p.category === product.category).slice(0, 3)
+  const related = getAllProducts()
+    .filter((p) => p.slug !== product.slug && p.category === product.category)
+    .slice(0, 3)
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">

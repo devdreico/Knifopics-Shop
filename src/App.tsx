@@ -1,21 +1,25 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import Layout from './components/layout/Layout'
-import Home from './pages/Home'
-import Knifes from './pages/Knifes'
-import Guides from './pages/Guides'
-import GuideDetail from './pages/GuideDetail'
-import Wiki from './pages/Wiki'
-import WikiSection from './pages/WikiSection'
-import Academia from './pages/Academia'
-import Kitchen from './pages/Kitchen'
-import Culturas from './pages/Culturas'
-import CulturaDetail from './pages/CulturaDetail'
-import Rankings from './pages/Rankings'
-import Product from './pages/Product'
-import Cart from './pages/Cart'
-import Checkout from './pages/Checkout'
+import { STORE_SECTIONS } from './sections/config'
+
+const Home = lazy(() => import('./pages/Home'))
+const SectionStore = lazy(() => import('./pages/SectionStore'))
+const Guides = lazy(() => import('./pages/Guides'))
+const GuideDetail = lazy(() => import('./pages/GuideDetail'))
+const Wiki = lazy(() => import('./pages/Wiki'))
+const WikiSection = lazy(() => import('./pages/WikiSection'))
+const News = lazy(() => import('./pages/News'))
+const NewsDetail = lazy(() => import('./pages/NewsDetail'))
+const Academia = lazy(() => import('./pages/Academia'))
+const Culturas = lazy(() => import('./pages/Culturas'))
+const CulturaDetail = lazy(() => import('./pages/CulturaDetail'))
+const Rankings = lazy(() => import('./pages/Rankings'))
+const Product = lazy(() => import('./pages/Product'))
+const Cart = lazy(() => import('./pages/Cart'))
+const Checkout = lazy(() => import('./pages/Checkout'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 function Page({ children }: { children: React.ReactNode }) {
   return (
@@ -36,47 +40,64 @@ function ScrollTop() {
   return null
 }
 
+function RouteFallback() {
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center">
+      <span className="clip-tag bg-[var(--ink)] px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.3em] text-white">
+        Cargando…
+      </span>
+    </div>
+  )
+}
+
 export default function App() {
   const location = useLocation()
 
   return (
     <Layout>
       <ScrollTop />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          {/* ——— Landing 50/50 ——— */}
-          <Route path="/" element={<Page><Home /></Page>} />
+      <Suspense fallback={<RouteFallback />}>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            {/* ——— Landing 50/50 ——— */}
+            <Route path="/" element={<Page><Home /></Page>} />
 
-          {/* ——— Sección KNIFES ——— */}
-          <Route path="/knifes" element={<Page><Knifes /></Page>} />
-          <Route path="/knifes/guias" element={<Page><Guides /></Page>} />
-          <Route path="/knifes/guias/:slug" element={<Page><GuideDetail /></Page>} />
-          <Route path="/knifes/wiki" element={<Page><Wiki /></Page>} />
-          <Route path="/knifes/wiki/:section" element={<Page><WikiSection /></Page>} />
-          <Route path="/knifes/academia" element={<Page><Academia /></Page>} />
+            {/* ——— Rutas espejo por sección (mismos módulos, distinto contenido) ——— */}
+            {STORE_SECTIONS.map((s) => {
+              const base = `/${s}`
+              return (
+                <Route key={s} path={base}>
+                  <Route index element={<Page><SectionStore /></Page>} />
+                  <Route path="guias" element={<Page><Guides /></Page>} />
+                  <Route path="guias/:slug" element={<Page><GuideDetail /></Page>} />
+                  <Route path="wiki" element={<Page><Wiki /></Page>} />
+                  <Route path="wiki/:topic" element={<Page><WikiSection /></Page>} />
+                  <Route path="noticias" element={<Page><News /></Page>} />
+                  <Route path="noticias/:slug" element={<Page><NewsDetail /></Page>} />
+                  <Route path="academia" element={<Page><Academia /></Page>} />
+                  <Route path="culturas" element={<Page><Culturas /></Page>} />
+                  <Route path="culturas/:slug" element={<Page><CulturaDetail /></Page>} />
+                  <Route path="rankings" element={<Page><Rankings /></Page>} />
+                </Route>
+              )
+            })}
 
-          {/* ——— Sección KITCHEN ——— */}
-          <Route path="/kitchen" element={<Page><Kitchen /></Page>} />
-          <Route path="/kitchen/guias" element={<Page><Guides /></Page>} />
-          <Route path="/kitchen/guias/:slug" element={<Page><GuideDetail /></Page>} />
-          <Route path="/kitchen/culturas" element={<Page><Culturas /></Page>} />
-          <Route path="/kitchen/culturas/:slug" element={<Page><CulturaDetail /></Page>} />
-          <Route path="/kitchen/rankings" element={<Page><Rankings /></Page>} />
+            {/* ——— Globales: producto + carrito combinado ——— */}
+            <Route path="/producto/:slug" element={<Page><Product /></Page>} />
+            <Route path="/carrito" element={<Page><Cart /></Page>} />
+            <Route path="/checkout" element={<Page><Checkout /></Page>} />
 
-          {/* ——— Globales: producto + carrito combinado ——— */}
-          <Route path="/producto/:slug" element={<Page><Product /></Page>} />
-          <Route path="/carrito" element={<Page><Cart /></Page>} />
-          <Route path="/checkout" element={<Page><Checkout /></Page>} />
+            {/* ——— Redirecciones de las rutas antiguas ——— */}
+            <Route path="/wiki" element={<Navigate to="/knifes/wiki" replace />} />
+            <Route path="/wiki/:section" element={<LegacyWikiRedirect />} />
+            <Route path="/academia" element={<Navigate to="/knifes/academia" replace />} />
+            <Route path="/noticias" element={<Navigate to="/knifes/noticias" replace />} />
+            <Route path="/cocina" element={<Navigate to="/kitchen" replace />} />
 
-          {/* ——— Redirecciones de las rutas antiguas ——— */}
-          <Route path="/wiki" element={<Navigate to="/knifes/wiki" replace />} />
-          <Route path="/wiki/:section" element={<LegacyWikiRedirect />} />
-          <Route path="/academia" element={<Navigate to="/knifes/academia" replace />} />
-          <Route path="/cocina" element={<Navigate to="/kitchen" replace />} />
-
-          <Route path="*" element={<Page><Home /></Page>} />
-        </Routes>
-      </AnimatePresence>
+            <Route path="*" element={<Page><NotFound /></Page>} />
+          </Routes>
+        </AnimatePresence>
+      </Suspense>
     </Layout>
   )
 }

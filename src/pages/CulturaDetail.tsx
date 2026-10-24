@@ -3,12 +3,13 @@ import { ArrowLeft, ArrowRight, Lightbulb, MapPin, ShoppingBag } from 'lucide-re
 import SectionTitle from '../components/ui/SectionTitle'
 import Reveal from '../components/ui/Reveal'
 import PolygonButton from '../components/ui/PolygonButton'
-import { getCulture } from '../data/cultures'
-import { getProduct } from '../data/products'
+import { getProduct, getCulture } from '../data/catalog'
+import { useStoreSection } from '../hooks/useSection'
 
 export default function CulturaDetail() {
   const { slug } = useParams()
-  const culture = slug ? getCulture(slug) : undefined
+  const section = useStoreSection()
+  const culture = slug ? getCulture(section, slug) : undefined
 
   if (!culture) {
     return (
@@ -41,18 +42,19 @@ export default function CulturaDetail() {
       <div
         className="glass clip-hero premium-shadow edge-highlight relative mt-6 overflow-hidden p-8 sm:p-12"
         style={{
-          background: 'linear-gradient(150deg, rgba(154,68,22,0.07) 0%, rgba(154,68,22,0.16) 100%)',
+          background:
+            'linear-gradient(150deg, color-mix(in srgb, var(--accent) 7%, transparent) 0%, color-mix(in srgb, var(--accent) 16%, transparent) 100%)',
         }}
       >
         <div className="absolute inset-0 grid-lines opacity-40" />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -right-6 -top-10 select-none text-[9rem] font-extrabold leading-none text-[#9a4416] opacity-[0.09]"
+          className="pointer-events-none absolute -right-6 -top-10 select-none text-[9rem] font-extrabold leading-none text-[var(--accent)] opacity-[0.09]"
         >
           {culture.name.slice(0, 2).toUpperCase()}
         </span>
         <div className="relative z-10 max-w-3xl">
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.24em] text-[#9a4416]">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.24em] text-[var(--accent)]">
             <MapPin size={12} /> {culture.region}
           </span>
           <h1 className="mt-3 text-4xl font-extrabold uppercase leading-none tracking-[-0.04em] sm:text-5xl">
@@ -104,7 +106,7 @@ export default function CulturaDetail() {
                           ${e.product.price.toLocaleString('es-AR')}
                         </p>
                       </div>
-                      <span className="flex shrink-0 items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#9a4416]">
+                      <span className="flex shrink-0 items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--accent)]">
                         Ver
                         <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
                       </span>

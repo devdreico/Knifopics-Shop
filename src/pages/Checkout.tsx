@@ -153,7 +153,7 @@ export default function Checkout() {
         <div
           aria-hidden="true"
           className="absolute -right-16 bottom-0 h-72 w-72 rounded-full opacity-30 blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(154,68,22,0.55) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--kitchen-accent) 55%, transparent) 0%, transparent 70%)' }}
         />
 
         <div className="relative mt-10 grid gap-8 lg:grid-cols-[1fr_380px]">
@@ -286,7 +286,7 @@ export default function Checkout() {
                       <span className="text-[var(--muted)]">
                         <span
                           className={`mr-1.5 inline-block h-2 w-2 align-middle ${
-                            l.product.category === 'knifes' ? 'bg-[var(--ink)]' : 'bg-[#9a4416]'
+                            l.product.category === 'knifes' ? 'bg-[var(--ink)]' : 'bg-[var(--kitchen-accent)]'
                           }`}
                           aria-hidden="true"
                         />

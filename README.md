@@ -31,9 +31,12 @@ El header tiene una **barra central `KNIFES | KITCHEN`** que conmuta entre secci
 | `/knifes/guias` | **Pasos por cuchillo** — guías tipo a tipo |
 | `/knifes/guias/:slug` | Guía interactiva con **stepper** (progreso, teclado ←/→) |
 | `/knifes/wiki` · `/knifes/wiki/:section` | Wiki del filo (afilado, datos, noticias) |
+| `/knifes/noticias` · `/knifes/noticias/:slug` | Noticias de cuchillería |
 | `/knifes/academia` | Mini app: **guía con timer · quiz · calculadora · flashcards** |
 | `/kitchen` | Tienda Kitchen: sartenes, ollas, gadgets y objetos generales |
 | `/kitchen/guias` · `/kitchen/guias/:slug` | Guías de cocina paso a paso |
+| `/kitchen/wiki` · `/kitchen/wiki/:section` | Wiki de cocina, datos y novedades |
+| `/kitchen/noticias` · `/kitchen/noticias/:slug` | Noticias gastronómicas |
 | `/kitchen/culturas` · `/kitchen/culturas/:slug` | Culturas gastronómicas del mundo |
 | `/kitchen/rankings` | Rankings famosos (tabs interactivos) |
 | `/producto/:slug` | Ficha con specs · **solo carrito + COD** |
@@ -64,11 +67,10 @@ npm run preview  # servir dist
 
 ## Datos
 
-Todo es TypeScript estático en `src/data/`:
+El contenido está tipado en `src/data/types.ts`, organizado por sección en `src/data/knifes/` y
+`src/data/kitchen/`, y expuesto a las páginas mediante `src/data/catalog.ts`. Incluye productos,
+guías, wiki, noticias, culturas, rankings y módulos de academia. El catálogo y las noticias que
+se muestran son datos estáticos de TypeScript; `src/data/feeds.ts` solo declara fuentes RSS y
+no implica que se estén consultando en tiempo real.
 
-- `products.ts` — **21 productos** (7 Knifes + 14 Kitchen: sartenes, wok, dutch oven, gadgets…)
-- `guides.ts` — 7 guías de cuchillo + 6 guías de cocina (pasos con tips)
-- `cultures.ts` — 6 culturas con platos, esenciales enlazados a productos y tip final
-- `rankings.ts` — 4 rankings con items rankeados
-- `wiki.ts` / `academy.ts` — wiki del filo y módulos de la academia
-- Arte de producto: **SVGs poligonales** en `KnifeArt.tsx` (cuchillos + cocina, tono cobre)
+El arte de producto usa **SVGs poligonales** en `KnifeArt.tsx` (cuchillos + cocina, tono cobre).
