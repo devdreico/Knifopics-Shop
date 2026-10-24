@@ -25,7 +25,7 @@ export const academia: AcademiaContent = {
     {
       id: 'k-mise',
       title: 'Mise en place de la semana',
-      meta: '35 min',
+      meta: '30 min',
       note: 'Preparación · domingo',
       steps: [
         { title: 'Lavado y corte', body: 'Verduras lavadas, cortadas y secas en contenedores.', seconds: 600 },

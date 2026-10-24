@@ -11,20 +11,6 @@ import { getProducts } from '../data/catalog'
 const knifes = getProducts('knifes')
 const kitchen = getProducts('kitchen')
 
-const knifesFeatures = [
-  'Tienda SOLO cuchillos premium',
-  'Guías y wiki completas del filo',
-  'Noticias de cuchillería',
-  'Academia, culturas y rankings',
-]
-
-const kitchenFeatures = [
-  'Tienda de sartenes y gadgets',
-  'Guías y wiki de cocina',
-  'Noticias gastronómicas',
-  'Academia, culturas y rankings',
-]
-
 const steps = [
   {
     icon: Boxes,
@@ -49,113 +35,125 @@ export default function Home() {
   return (
     <div>
       {/* ——— HERO 50/50: KNIVES | KITCHEN ——— */}
-      <section className="relative overflow-hidden border-b border-[var(--line)]">
-        <div className="pointer-events-none absolute left-1/2 top-7 z-30 hidden -translate-x-1/2 md:block">
-          <span className="clip-tag bg-[var(--ink)] px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.3em] text-white">
-            50 / 50
-          </span>
-        </div>
-
-        <div className="flex flex-col md:min-h-[calc(100dvh-4rem)] md:flex-row">
-          {/* KNIVES */}
-          <Link
-            to="/knifes"
-            className="group relative flex flex-1 flex-col justify-center overflow-hidden border-b border-[var(--line)] px-6 py-16 transition-[flex-grow] duration-500 ease-out hover:flex-[1.3] sm:px-10 md:border-b-0 md:border-r md:py-20"
+      <section className="relative isolate overflow-hidden border-b border-[var(--line)]">
+        <div className="pointer-events-none absolute inset-0 grid-lines opacity-30" />
+        <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-12 sm:px-6 sm:pb-14 sm:pt-16 lg:pt-20">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="mx-auto max-w-3xl text-center"
           >
-            <div className="pointer-events-none absolute inset-0 grid-lines opacity-60" />
-            <div className="pointer-events-none absolute -right-16 top-1/2 w-[380px] -translate-y-1/2 opacity-20 transition-transform duration-700 group-hover:scale-110 sm:w-[460px]">
-              <KnifeArt kind="chef" tone="blade" />
-            </div>
+            <span className="clip-tag inline-flex items-center gap-2 bg-[var(--ink)] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.24em] text-white">
+              Knifopics <span className="text-[var(--beige)]">·</span> 2 mundos, 1 cocina
+            </span>
+            <h1 className="mt-6 text-4xl font-extrabold uppercase leading-[0.95] tracking-[-0.055em] sm:text-6xl lg:text-7xl">
+              El filo y el fuego.
+              <span className="mt-2 block text-[var(--muted)]">Elegí tu mundo.</span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+              Cuchillos para cortar mejor. Herramientas para cocinar mejor. Explorá dos tiendas
+              especializadas con un solo carrito y pago contra entrega.
+            </p>
+          </motion.div>
+
+          <div className="mt-9 grid gap-4 md:mt-12 md:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.55, delay: 0.08 }}
+            >
+              <Link
+                to="/knifes"
+                className="group relative flex min-h-[350px] flex-col justify-between overflow-hidden border border-[var(--line-strong)] bg-[var(--surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-hover)] sm:min-h-[420px] sm:p-9"
+              >
+                <div className="pointer-events-none absolute inset-0 grid-lines opacity-50" />
+                <div className="pointer-events-none absolute -right-12 top-1/2 w-[78%] -translate-y-1/2 opacity-25 transition duration-500 group-hover:scale-105 group-hover:opacity-40 sm:-right-6">
+                  <KnifeArt kind="chef" tone="blade" />
+                </div>
+                <div className="relative z-10 flex items-start justify-between gap-4">
+                  <span className="clip-tag bg-[var(--ink)] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-white">
+                    01 · El filo
+                  </span>
+                  <span className="font-mono-nums text-xs font-bold text-[var(--muted)]">KNIFES</span>
+                </div>
+                <div className="relative z-10 max-w-md">
+                  <h2 className="text-4xl font-extrabold uppercase leading-none tracking-[-0.05em] sm:text-6xl">
+                    Knifes
+                  </h2>
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+                    Cuchillos elegidos por su acero, geometría y propósito. Guías para conocerlos y
+                    cuidarlos.
+                  </p>
+                  <span className="btn-knife mt-6 inline-flex items-center gap-2 bg-[var(--ink)] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition group-hover:bg-[var(--accent)] group-hover:text-[var(--accent-ink)]">
+                    Explorar cuchillos <ArrowRight size={15} />
+                  </span>
+                  <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+                    {knifes.length} cuchillos · guías · academia
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: -28 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 max-w-xl"
+              transition={{ duration: 0.55, delay: 0.16 }}
             >
-              <span className="clip-tag inline-flex bg-[var(--ink)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.28em] text-white">
-                Sección 01
-              </span>
-              <h1 className="mt-6 text-5xl font-extrabold uppercase leading-[0.92] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
-                Knifes
-              </h1>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-[var(--muted)] sm:text-base">
-                El filo como disciplina: cuchillos premium, wikis completísimas, pasos por cuchillo
-                y guías interactivas con la academia del filo.
-              </p>
-              <ul className="mt-7 grid gap-2.5">
-                {knifesFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm font-semibold">
-                    <span className="h-1.5 w-6 shrink-0 bg-[var(--ink)]" aria-hidden="true" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <span className="btn-knife mt-9 inline-flex items-center gap-2 bg-[var(--accent)] px-7 py-3.5 pr-9 text-sm font-bold uppercase tracking-[0.08em] text-[var(--accent-ink)] transition-all hover:shadow-[0_8px_24px_-10px_rgba(0,0,0,0.45)]">
-                Entrar a Knifes <ArrowRight size={16} />
-              </span>
-            </motion.div>
-          </Link>
-
-          {/* KITCHEN */}
-          <Link
-            to="/kitchen"
-            className="group relative flex flex-1 flex-col justify-center overflow-hidden px-6 py-16 transition-[flex-grow] duration-500 ease-out hover:flex-[1.3] sm:px-10 md:py-20"
-            style={{
-              background:
-                'linear-gradient(160deg, rgba(253,230,138,0.32) 0%, rgba(255,237,213,0.7) 100%)',
-            }}
-          >
-            <div
-              className="pointer-events-none absolute inset-0 grid-lines opacity-60"
-              style={{
-                backgroundImage:
-                  'linear-gradient(to right, rgba(194,65,12,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(194,65,12,0.06) 1px, transparent 1px)',
-              }}
-            />
-            <div className="pointer-events-none absolute -left-16 top-1/2 w-[380px] -translate-y-1/2 opacity-20 transition-transform duration-700 group-hover:scale-110 sm:w-[460px] md:left-auto md:-right-16">
-              <KnifeArt kind="pan" tone="copper" />
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 28 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 max-w-xl md:ml-auto"
-            >
-              <span
-                className="clip-tag inline-flex px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.28em] text-white"
-                style={{ background: 'var(--kitchen-accent)' }}
+              <Link
+                to="/kitchen"
+                className="group relative flex min-h-[350px] flex-col justify-between overflow-hidden border border-[color-mix(in_srgb,var(--kitchen-accent)_30%,transparent)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-hover)] sm:min-h-[420px] sm:p-9"
+                style={{
+                  background:
+                    'linear-gradient(145deg, color-mix(in srgb, var(--kitchen-accent) 10%, white), color-mix(in srgb, var(--kitchen-accent) 22%, var(--surface)))',
+                }}
               >
-                Sección 02
-              </span>
-              <h1 className="mt-6 text-5xl font-extrabold uppercase leading-[0.92] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
-                Kitchen
-              </h1>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-[var(--muted)] sm:text-base">
-                Sartenes, ollas y gadgets con guías de cocina, culturas gastronómicas del mundo y
-                los rankings famosos — todo su e-commerce propio.
-              </p>
-              <ul className="mt-7 grid gap-2.5">
-                {kitchenFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm font-semibold">
-                    <span
-                      className="h-1.5 w-6 shrink-0"
-                      aria-hidden="true"
-                      style={{ background: 'var(--kitchen-accent)' }}
-                    />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <span
-                className="btn-knife mt-9 inline-flex items-center gap-2 px-7 py-3.5 pr-9 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all hover:brightness-110"
-                style={{ background: 'var(--kitchen-accent)' }}
-              >
-                Entrar a Kitchen <ArrowRight size={16} />
-              </span>
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-50"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(to right, color-mix(in srgb, var(--kitchen-accent) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--kitchen-accent) 8%, transparent) 1px, transparent 1px)',
+                    backgroundSize: '28px 28px',
+                  }}
+                />
+                <div className="pointer-events-none absolute -left-10 top-1/2 w-[76%] -translate-y-1/2 opacity-35 transition duration-500 group-hover:scale-105 group-hover:opacity-55 sm:left-0">
+                  <KnifeArt kind="pan" tone="copper" />
+                </div>
+                <div className="relative z-10 flex items-start justify-between gap-4">
+                  <span className="clip-tag px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-white" style={{ background: 'var(--kitchen-accent)' }}>
+                    02 · El fuego
+                  </span>
+                  <span className="font-mono-nums text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                    Kitchen
+                  </span>
+                </div>
+                <div className="relative z-10 ml-auto max-w-md text-right">
+                  <h2 className="text-4xl font-extrabold uppercase leading-none tracking-[-0.05em] sm:text-6xl">
+                    Kitchen
+                  </h2>
+                  <p className="ml-auto mt-3 max-w-sm text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+                    Sartenes, ollas y herramientas prácticas. Técnicas y recursos para llevarlas a
+                    la cocina.
+                  </p>
+                  <span
+                    className="btn-knife mt-6 inline-flex items-center gap-2 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
+                    style={{ background: 'var(--kitchen-accent)' }}
+                  >
+                    Explorar Kitchen <ArrowRight size={15} />
+                  </span>
+                  <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+                    {kitchen.length} herramientas · recetas · academia
+                  </p>
+                </div>
+              </Link>
             </motion.div>
-          </Link>
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+            <span className="inline-flex items-center gap-2"><ShoppingBag size={13} /> Un carrito combinado</span>
+            <span className="hidden h-1 w-1 bg-[var(--line-strong)] sm:block" aria-hidden="true" />
+            <span className="inline-flex items-center gap-2"><Bike size={13} /> Pagás al recibir</span>
+          </div>
         </div>
       </section>
 

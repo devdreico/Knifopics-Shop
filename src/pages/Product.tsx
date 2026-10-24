@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Check, ShoppingBag, Banknote } from 'lucide-react'
@@ -11,17 +11,13 @@ import { useCart } from '../context/CartContext'
 
 export default function Product() {
   const { slug } = useParams()
+  const navigate = useNavigate()
   const product = slug ? getProduct(slug) : undefined
   const { add, count } = useCart()
   const category = product?.category ?? null
 
   useEffect(() => {
-    if (!category) return
-    const prev = document.documentElement.dataset.section
-    document.documentElement.dataset.section = category
-    return () => {
-      document.documentElement.dataset.section = prev ?? 'home'
-    }
+    document.documentElement.dataset.section = category ?? 'home'
   }, [category])
 
   if (!product) {
@@ -113,9 +109,16 @@ export default function Product() {
             >
               <ShoppingBag size={16} /> Añadir al carrito
             </button>
-            <PolygonButton to="/checkout" variant="ghost">
+            <button
+              type="button"
+              onClick={() => {
+                add(product)
+                navigate('/checkout')
+              }}
+              className="btn-knife inline-flex items-center gap-2 border border-[var(--line-strong)] px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-[var(--ink)] transition hover:bg-[var(--surface-2)]"
+            >
               <Banknote size={16} /> Pasar por checkout
-            </PolygonButton>
+            </button>
           </div>
 
           <p className="mt-3 flex items-center gap-2 text-xs text-[var(--muted)]">

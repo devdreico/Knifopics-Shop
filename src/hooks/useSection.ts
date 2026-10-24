@@ -11,11 +11,9 @@ export function useSection(): Section {
   const section = sectionFromPath(pathname)
 
   useEffect(() => {
+    if (pathname.startsWith('/producto/')) return
     document.documentElement.dataset.section = section
-    return () => {
-      delete document.documentElement.dataset.section
-    }
-  }, [section])
+  }, [pathname, section])
 
   return section
 }

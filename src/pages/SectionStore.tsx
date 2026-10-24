@@ -92,32 +92,6 @@ export default function SectionStore() {
         subtitle={cfg.subtitle}
       />
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {cfg.discovery.map((d: DiscoveryCard, i: number) => {
-          const Icon = d.icon
-          return (
-            <Reveal key={d.to} delay={i * 0.06}>
-              <Link
-                to={d.to}
-                className="glass premium-shadow clip-card edge-highlight group flex h-full flex-col p-6 transition-all duration-200 hover:-translate-y-1"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <Icon size={26} strokeWidth={1.7} className="shrink-0" />
-                  <ArrowRight
-                    size={16}
-                    className="shrink-0 text-[var(--muted)] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[var(--ink)]"
-                  />
-                </div>
-                <h3 className="mt-5 text-lg leading-tight font-extrabold uppercase tracking-[-0.02em]">
-                  {d.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{d.body}</p>
-              </Link>
-            </Reveal>
-          )
-        })}
-      </div>
-
       <Reveal delay={0.08} className="mt-10">
         <div className="glass clip-card flex flex-wrap items-center gap-3 p-4">
           <input
@@ -132,7 +106,7 @@ export default function SectionStore() {
             value={family}
             onChange={(e) => setFamily(e.target.value)}
             className="text-sm font-semibold"
-            aria-label="Familia"
+            aria-label={section === 'knifes' ? 'Filtrar por tipo de cuchillo' : cfg.filterLabel}
           >
             <option value={ALL}>Todos</option>
             {familyOptions.map((f) => (
@@ -147,7 +121,7 @@ export default function SectionStore() {
               value={steel}
               onChange={(e) => setSteel(e.target.value)}
               className="text-sm font-semibold"
-              aria-label={cfg.filterLabel}
+              aria-label="Filtrar por acero"
             >
               <option value={ALL}>Todos los aceros</option>
               {steelOptions.map((s) => (
@@ -206,6 +180,39 @@ export default function SectionStore() {
           </div>
         </Reveal>
       )}
+
+      <section className="mt-16 border-t border-[var(--line)] pt-10">
+        <SectionTitle
+          eyebrow={`${cfg.label} · Explorar`}
+          title="Más que una tienda"
+          subtitle="Guías prácticas, artículos y recursos para elegir y disfrutar mejor tus herramientas."
+        />
+        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {cfg.discovery.map((d: DiscoveryCard, i: number) => {
+            const Icon = d.icon
+            return (
+              <Reveal key={d.to} delay={i * 0.05}>
+                <Link
+                  to={d.to}
+                  className="glass premium-shadow clip-card edge-highlight group flex h-full flex-col p-5 transition-all duration-200 hover:-translate-y-1"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <Icon size={23} strokeWidth={1.7} className="shrink-0" />
+                    <ArrowRight
+                      size={15}
+                      className="shrink-0 text-[var(--muted)] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[var(--ink)]"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-base leading-tight font-extrabold uppercase tracking-[-0.02em]">
+                    {d.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{d.body}</p>
+                </Link>
+              </Reveal>
+            )
+          })}
+        </div>
+      </section>
 
       <Reveal delay={0.1} className="mt-12">
         <Link
