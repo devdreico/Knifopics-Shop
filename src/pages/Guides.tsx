@@ -4,14 +4,15 @@ import { ArrowRight, Clock, ChefHat, Flame } from 'lucide-react'
 import SectionTitle from '../components/ui/SectionTitle'
 import Reveal from '../components/ui/Reveal'
 import KnifeArt from '../components/ui/KnifeArt'
-import { useSection } from '../hooks/useSection'
-import { knifeGuides, kitchenGuides } from '../data/guides'
+import { getGuides } from '../data/catalog'
+import { useStoreSection } from '../hooks/useSection'
+import { SECTIONS } from '../sections/config'
 
 export default function Guides() {
-  const section = useSection()
+  const section = useStoreSection()
   const isKnifes = section === 'knifes'
-  const guides = isKnifes ? knifeGuides : kitchenGuides
-  const base = isKnifes ? '/knifes/guias' : '/kitchen/guias'
+  const guides = getGuides(section)
+  const base = `${SECTIONS[section].basePath}/guias`
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">

@@ -5,10 +5,12 @@ import Reveal from '../components/ui/Reveal'
 import PolygonButton from '../components/ui/PolygonButton'
 import { getProduct, getCulture } from '../data/catalog'
 import { useStoreSection } from '../hooks/useSection'
+import { SECTIONS } from '../sections/config'
 
 export default function CulturaDetail() {
   const { slug } = useParams()
   const section = useStoreSection()
+  const cfg = SECTIONS[section]
   const culture = slug ? getCulture(section, slug) : undefined
 
   if (!culture) {
@@ -16,7 +18,7 @@ export default function CulturaDetail() {
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="text-3xl font-extrabold uppercase">Cultura no encontrada</h1>
         <div className="mt-8 flex justify-center">
-          <PolygonButton to="/kitchen/culturas">Ver culturas</PolygonButton>
+          <PolygonButton to={`${cfg.basePath}/culturas`}>Ver culturas</PolygonButton>
         </div>
       </div>
     )
@@ -31,7 +33,7 @@ export default function CulturaDetail() {
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <Reveal>
         <Link
-          to="/kitchen/culturas"
+          to={`${cfg.basePath}/culturas`}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
         >
           <ArrowLeft size={14} /> Culturas del mundo
@@ -133,10 +135,10 @@ export default function CulturaDetail() {
 
           <Reveal delay={0.2}>
             <div className="flex flex-wrap gap-3">
-              <PolygonButton to="/kitchen" variant="beige">
-                Ir a la tienda Kitchen
+              <PolygonButton to={cfg.basePath} variant="beige">
+                Ir a la tienda {cfg.label}
               </PolygonButton>
-              <PolygonButton to="/kitchen/culturas" variant="ghost">
+              <PolygonButton to={`${cfg.basePath}/culturas`} variant="ghost">
                 Todas las culturas
               </PolygonButton>
             </div>

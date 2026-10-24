@@ -83,7 +83,7 @@ const kitchenDiscovery: DiscoveryCard[] = [
     to: '/kitchen/noticias',
     icon: Newspaper,
     title: 'Noticias de cocina',
-    body: 'Tendencias, recetas y novedades de gastronomía.',
+    body: 'Notas editoriales, técnicas y novedades de gastronomía.',
   },
   {
     to: '/kitchen/academia',

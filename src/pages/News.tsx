@@ -18,8 +18,8 @@ export default function News() {
         title="Noticias"
         subtitle={
           section === 'knifes'
-            ? 'Industria del filo, lanzamientos, aceros y tendencias de cuchillería.'
-            : 'Tendencias gastronómicas, novedades de cocina y lo que se mueve en la mesa.'
+            ? 'Artículos editoriales sobre cuchillería, aceros y cuidado del filo. No es un feed en vivo.'
+            : 'Notas editoriales de técnicas y utensilios de cocina. No es un feed en vivo.'
         }
       />
 

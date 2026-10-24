@@ -5,15 +5,18 @@ import { ArrowLeft, ArrowRight, Check, Lightbulb, RotateCcw, ShoppingBag } from 
 import Reveal from '../components/ui/Reveal'
 import PolygonButton from '../components/ui/PolygonButton'
 import KnifeArt from '../components/ui/KnifeArt'
-import { getGuide } from '../data/guides'
+import { getGuide } from '../data/catalog'
+import { useStoreSection } from '../hooks/useSection'
+import { SECTIONS } from '../sections/config'
 
 export default function GuideDetail() {
   const { slug } = useParams()
-  const found = slug ? getGuide(slug) : undefined
+  const section = useStoreSection()
+  const found = slug ? getGuide(section, slug) : undefined
   const [idx, setIdx] = useState(0)
   const [done, setDone] = useState(false)
 
-  const total = found?.guide.steps.length ?? 0
+  const total = found?.steps.length ?? 0
 
   const next = useCallback(() => {
     if (!total) return
@@ -50,15 +53,15 @@ export default function GuideDetail() {
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="text-3xl font-extrabold uppercase">Guía no encontrada</h1>
         <div className="mt-8 flex justify-center">
-          <PolygonButton to="/knifes/guias">Ver todas las guías</PolygonButton>
+          <PolygonButton to={`${SECTIONS[section].basePath}/guias`}>Ver todas las guías</PolygonButton>
         </div>
       </div>
     )
   }
 
-  const { guide, section } = found
-  const hub = section === 'knifes' ? '/knifes/guias' : '/kitchen/guias'
-  const shop = section === 'knifes' ? '/knifes' : '/kitchen'
+  const guide = found
+  const hub = `${SECTIONS[section].basePath}/guias`
+  const shop = SECTIONS[section].basePath
   const step = guide.steps[idx]
   const progress = (done ? total : idx) / total * 100
 

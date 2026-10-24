@@ -3,22 +3,38 @@ import { motion } from 'framer-motion'
 import { ArrowRight, MapPin } from 'lucide-react'
 import SectionTitle from '../components/ui/SectionTitle'
 import Reveal from '../components/ui/Reveal'
-import { cultures } from '../data/cultures'
+import { getCultures } from '../data/catalog'
+import { SECTIONS } from '../sections/config'
+import { useStoreSection } from '../hooks/useSection'
 
 export default function Culturas() {
+  const section = useStoreSection()
+  const cultures = getCultures(section)
+  const cfg = SECTIONS[section]
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
       <SectionTitle
-        eyebrow="Kitchen · Cultura"
-        title="Culturas del mundo"
-        subtitle="Seis cocinas que definieron cómo come el planeta: sus platos, sus utensilios esenciales y el truco que las resume."
+        eyebrow={`${cfg.label} · Cultura`}
+        title={section === 'knifes' ? 'Culturas del filo' : 'Culturas del mundo'}
+        subtitle={
+          section === 'knifes'
+            ? 'Tradiciones cuchilleras, perfiles regionales y herramientas que las representan.'
+            : 'Cocinas que definieron cómo come el planeta: sus platos, utensilios y técnicas.'
+        }
       />
+
+      {cultures.length === 0 && (
+        <div className="glass clip-card mt-10 p-8 text-center text-sm text-[var(--muted)]">
+          Estamos preparando contenido para esta sección.
+        </div>
+      )}
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {cultures.map((c, i) => (
           <Reveal key={c.slug} delay={i * 0.06}>
             <Link
-              to={`/kitchen/culturas/${c.slug}`}
+              to={`${cfg.basePath}/culturas/${c.slug}`}
               className="glass premium-shadow premium-shadow-hover clip-hero edge-highlight group relative flex h-full flex-col overflow-hidden p-7 transition-all duration-200 hover:-translate-y-1.5"
             >
               <span
@@ -65,8 +81,9 @@ export default function Culturas() {
       <Reveal delay={0.2} className="mt-12">
         <motion.div className="glass clip-hero premium-shadow p-7 sm:p-9">
           <p className="max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
-            Cada cultura se cruza con la tienda Kitchen: los utensilios esenciales de cada región
-            enlazan con los productos que los representan — del wok chino a la Dutch oven francesa.
+            {section === 'knifes'
+              ? 'Explorá perfiles y herramientas vinculados con la tradición cuchillera de cada región.'
+              : 'Cada cultura se cruza con la tienda Kitchen: los utensilios esenciales enlazan con productos que los representan.'}
           </p>
         </motion.div>
       </Reveal>

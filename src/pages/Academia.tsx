@@ -17,6 +17,8 @@ import {
 import SectionTitle from '../components/ui/SectionTitle'
 import Reveal from '../components/ui/Reveal'
 import PolygonButton from '../components/ui/PolygonButton'
+import KitchenAcademia from './KitchenAcademia'
+import { useStoreSection } from '../hooks/useSection'
 import {
   quizQuestions,
   flashcards,
@@ -538,6 +540,9 @@ function CardsModule() {
 /* ————— PAGE ————— */
 export default function Academia() {
   const [params, setParams] = useSearchParams()
+  const section = useStoreSection()
+  if (section === 'kitchen') return <KitchenAcademia />
+
   const raw = (params.get('m') ?? 'guia') as ModuleId
   const active: ModuleId = modules.some((m) => m.id === raw) ? raw : 'guia'
 

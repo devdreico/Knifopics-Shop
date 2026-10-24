@@ -4,7 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Crown, Medal } from 'lucide-react'
 import SectionTitle from '../components/ui/SectionTitle'
 import Reveal from '../components/ui/Reveal'
-import { rankings, type Ranking } from '../data/rankings'
+import { getRankings } from '../data/catalog'
+import type { Ranking } from '../data/types'
+import { useStoreSection } from '../hooks/useSection'
+import { SECTIONS } from '../sections/config'
 
 function RankBadge({ rank }: { rank: number }) {
   if (rank === 1) {
@@ -62,17 +65,30 @@ function RankingList({ ranking }: { ranking: Ranking }) {
 }
 
 export default function Rankings() {
-  const [activeId, setActiveId] = useState(rankings[0].id)
+  const section = useStoreSection()
+  const cfg = SECTIONS[section]
+  const rankings = getRankings(section)
+  const [activeId, setActiveId] = useState('')
   const active = rankings.find((r) => r.id === activeId) ?? rankings[0]
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
       <SectionTitle
-        eyebrow="Kitchen · Rankings"
-        title="Rankings famosos"
-        subtitle="Los listados que todos citan: sartenes, cocinas del mundo, gadgets imprescindibles y los platos más difíciles."
+        eyebrow={`${cfg.label} · Rankings`}
+        title={section === 'knifes' ? 'Rankings del filo' : 'Rankings de cocina'}
+        subtitle={
+          section === 'knifes'
+            ? 'Comparativas editoriales de perfiles, aceros y cuidado de cuchillos.'
+            : 'Selecciones editoriales de utensilios, cocinas del mundo y técnicas.'
+        }
       />
 
+      {rankings.length === 0 || !active ? (
+        <div className="glass clip-card mt-10 p-8 text-center text-sm text-[var(--muted)]">
+          Estamos preparando rankings para esta sección.
+        </div>
+      ) : (
+        <>
       {/* Tabs */}
       <Reveal delay={0.08}>
         <div className="mt-9 flex flex-wrap gap-2" role="tablist" aria-label="Rankings">
@@ -131,16 +147,19 @@ export default function Rankings() {
 
       <Reveal delay={0.15} className="mt-12 flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">
-          Los utensilios de cada ranking viven en la tienda Kitchen — sumalos al mismo carrito que
-          tus cuchillos.
+          {section === 'knifes'
+            ? 'Encontrá cuchillos y herramientas de cuidado en la tienda Knifes.'
+            : 'Encontrá utensilios de cocina en la tienda Kitchen.'}
         </p>
         <Link
-          to="/kitchen"
+          to={cfg.basePath}
           className="btn-knife inline-flex items-center gap-2 bg-[var(--accent)] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-[var(--accent-ink)] transition hover:brightness-110"
         >
           Ir a la tienda <ArrowRight size={14} />
         </Link>
       </Reveal>
+        </>
+      )}
     </div>
   )
 }

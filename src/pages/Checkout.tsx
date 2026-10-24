@@ -138,7 +138,7 @@ export default function Checkout() {
       <SectionTitle
         eyebrow="Checkout · Contra entrega"
         title="Finalizar pedido"
-        subtitle={`${count} artículo${count !== 1 ? 's' : ''} · total $${total.toLocaleString('es-AR')} · se despliega directo a Formspree`}
+        subtitle={`${count} artículo${count !== 1 ? 's' : ''} · total $${total.toLocaleString('es-AR')} · envío a coordinar`}
       />
 
       {/* Orbes de color detrás del glass */}
@@ -155,6 +155,16 @@ export default function Checkout() {
         />
 
         <div className="relative mt-10 grid gap-8 lg:grid-cols-[1fr_380px]">
+          {!FORMSPREE_ID && (
+            <p
+              role="status"
+              className="glass clip-card border border-[var(--line)] p-4 text-sm font-semibold text-[var(--ink)] lg:col-span-2"
+            >
+              Modo demostración: este formulario no envía pedidos. Para recibir órdenes reales,
+              configurá <code>VITE_FORMSPREE_ID</code> y reiniciá la aplicación.
+            </p>
+          )}
+
           {/* ——— Formulario glass ——— */}
           <Reveal>
             <div

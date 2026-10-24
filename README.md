@@ -30,13 +30,16 @@ El header tiene una **barra central `KNIFES | KITCHEN`** que conmuta entre secci
 | `/knifes` | Tienda de **solo cuchillos** (búsqueda, acero, orden) |
 | `/knifes/guias` | **Pasos por cuchillo** — guías tipo a tipo |
 | `/knifes/guias/:slug` | Guía interactiva con **stepper** (progreso, teclado ←/→) |
-| `/knifes/wiki` · `/knifes/wiki/:section` | Wiki del filo (afilado, datos, noticias) |
-| `/knifes/noticias` · `/knifes/noticias/:slug` | Noticias de cuchillería |
+| `/knifes/wiki` · `/knifes/wiki/:topic` | Wiki del filo y artículos de afilado |
+| `/knifes/noticias` · `/knifes/noticias/:slug` | Artículos de cuchillería |
 | `/knifes/academia` | Mini app: **guía con timer · quiz · calculadora · flashcards** |
+| `/knifes/culturas` · `/knifes/culturas/:slug` | Tradiciones cuchilleras por región |
+| `/knifes/rankings` | Comparativas de perfiles, aceros y cuidado |
 | `/kitchen` | Tienda Kitchen: sartenes, ollas, gadgets y objetos generales |
 | `/kitchen/guias` · `/kitchen/guias/:slug` | Guías de cocina paso a paso |
-| `/kitchen/wiki` · `/kitchen/wiki/:section` | Wiki de cocina, datos y novedades |
-| `/kitchen/noticias` · `/kitchen/noticias/:slug` | Noticias gastronómicas |
+| `/kitchen/wiki` · `/kitchen/wiki/:topic` | Wiki de técnicas de cocina |
+| `/kitchen/noticias` · `/kitchen/noticias/:slug` | Artículos editoriales de cocina (sin feed en vivo) |
+| `/kitchen/academia` | Mini app: **sesiones con temporizador · quiz · flashcards · convertidor** |
 | `/kitchen/culturas` · `/kitchen/culturas/:slug` | Culturas gastronómicas del mundo |
 | `/kitchen/rankings` | Rankings famosos (tabs interactivos) |
 | `/producto/:slug` | Ficha con specs · **solo carrito + COD** |
@@ -69,8 +72,7 @@ npm run preview  # servir dist
 
 El contenido está tipado en `src/data/types.ts`, organizado por sección en `src/data/knifes/` y
 `src/data/kitchen/`, y expuesto a las páginas mediante `src/data/catalog.ts`. Incluye productos,
-guías, wiki, noticias, culturas, rankings y módulos de academia. El catálogo y las noticias que
-se muestran son datos estáticos de TypeScript; `src/data/feeds.ts` solo declara fuentes RSS y
-no implica que se estén consultando en tiempo real.
+guías, wiki, artículos, culturas, rankings y módulos de academia. El contenido es estático de
+TypeScript; las noticias no se consultan en tiempo real.
 
 El arte de producto usa **SVGs poligonales** en `KnifeArt.tsx` (cuchillos + cocina, tono cobre).
